@@ -25,7 +25,6 @@ class ReceiptsController < ApplicationController
   # POST /receipts.json
   def create
     @receipt = Receipt.new(receipt_params)
-    @receipt.date_issued = Date.strptime(receipt_params[:date_issued], "%m/%d/%Y")
 
     respond_to do |format|
       if @receipt.save
@@ -71,9 +70,11 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
+      params[:receipt][:date_issued] = Date.strptime(params[:receipt][:date_issued], "%m/%d/%Y")
       params.require(:receipt).permit(
         :company_name, :receipt_number, :address, :date_issued, :total, :balance, :amount_received,
-        receipt_details_attributes: [:id, :_destroy, :qty, :unit, :unit_price, :total]
+        receipt_details_attributes: [:id, :_destroy, :qty, :unit, :unit_price, :total,
+          item_attributes: [:id, :_destroy, :description, :part_number]]
       )
     end
 
