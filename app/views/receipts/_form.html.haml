@@ -1,10 +1,43 @@
-= form_for @receipt do |f|
+= form_for @receipt, html: { class: 'form-horizontal' } do |f|
   - if @receipt.errors.any?
-    #error_explanation
+    #error_explanation.col-xs-12
       %h2= "#{pluralize(@receipt.errors.count, "error")} prohibited this receipt from being saved:"
       %ul
         - @receipt.errors.full_messages.each do |msg|
           %li= msg
 
-  .actions
+  .field.form-group.col-xs-8
+    = f.label 'Name'
+    = f.text_field :company_name, class: 'form-control', size: 50, maxlength: 20
+  .field.form-group.col-xs-4
+    = f.label 'No.'
+    = f.text_field :receipt_number, class: 'form-control'
+  .field.form-group.col-xs-8
+    = f.label :address
+    = f.text_field :address, class: 'form-control', size: 50, maxlength: 50
+  .field.form-group.col-xs-4
+    = f.label :date_issued
+    = f.text_field :date_issued, class: 'form-control date_picker'
+
+  .col-xs-12
+    .row-fluid
+      = f.fields_for :receipt_details do |receipt_detail|
+        = render 'detail', :f => receipt_detail
+      .col-xs-12
+        = link_to_add_association 'Add Item', f, :receipt_details, :partial => 'receipts/detail', class: 'glyphicon glyphicon-plus btn btn-link btn-xs', :wrap_object => Proc.new {|receipt_detail| receipt_detail.item = Item.new; receipt_detail }
+
+  .col-xs-8
+  .field.form-group.col-xs-4
+    = f.label :total
+    = f.number_field :total, class: 'form-control', step: 0.01
+  .col-xs-8
+  .field.form-group.col-xs-4
+    = f.label :amount_received
+    = f.number_field :amount_received, class: 'form-control', step: 0.01
+  .col-xs-8
+  .field.form-group.col-xs-4
+    = f.label :balance
+    = f.number_field :balance, class: 'form-control', step: 0.01
+
+  .actions.col-xs-12
     = f.submit 'Save'

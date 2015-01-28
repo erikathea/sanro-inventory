@@ -1,0 +1,24 @@
+.nested-fields.col-xs-12
+  = f.fields_for :item do |item|
+    = render 'item', :f => item
+  / = link_to_add_association ' ', f, :item, :partial => 'receipts/item', class: 'glyphicon glyphicon-plus btn btn-link btn-xs'
+  / .field.form-group.col-xs-3
+  /   = label_tag 'Desc'
+  /   = text_field_tag 'description', nil, class: 'form-control'
+  / .field.form-group.col-xs-2
+  /   = label_tag 'Part'
+  /   = text_field_tag 'part', nil, class: 'form-control'
+  .field.form-group.col-xs-1
+    = f.label :qty
+    = f.number_field :qty, class: 'form-control', step: 0.01
+  .field.form-group.col-xs-1
+    = f.label :unit
+    = f.text_field :unit, class: 'form-control'
+  .field.form-group.col-xs-2
+    = f.label 'Price'
+    = f.number_field :unit_price, class: 'form-control', step: 0.01
+  .field.form-group.col-xs-2
+    = f.label :total
+    = f.number_field :total, class: 'form-control', step: 0.01
+  .col-xs-1
+    = link_to_remove_association " ", f, class: 'glyphicon glyphicon-remove-sign btn btn-link btn-xs'

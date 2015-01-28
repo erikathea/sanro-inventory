@@ -46,6 +46,8 @@ gem 'will_paginate'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'devise'
 gem 'composite_primary_keys', '=7.0.10'
+gem 'jquery-ui-sass-rails'
+gem 'cocoon'
 group :development do
   gem 'better_errors'
   gem 'html2haml'
