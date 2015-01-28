@@ -1,13 +1,7 @@
 .nested-fields.col-xs-12
   = f.fields_for :item do |item|
     = render 'item', :f => item
-  / = link_to_add_association ' ', f, :item, :partial => 'receipts/item', class: 'glyphicon glyphicon-plus btn btn-link btn-xs'
-  / .field.form-group.col-xs-3
-  /   = label_tag 'Desc'
-  /   = text_field_tag 'description', nil, class: 'form-control'
-  / .field.form-group.col-xs-2
-  /   = label_tag 'Part'
-  /   = text_field_tag 'part', nil, class: 'form-control'
+
   .field.form-group.col-xs-1
     = f.label :qty
     = f.number_field :qty, class: 'form-control', step: 0.01
