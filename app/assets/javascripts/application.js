@@ -16,4 +16,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require cocoon
+//= require typeahead-bs2.min.js
+//= require bootstrap-tag
 //= require_tree .
