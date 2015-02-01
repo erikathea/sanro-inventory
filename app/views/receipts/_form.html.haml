@@ -11,13 +11,14 @@
     = f.text_field :company_name, class: 'form-control', size: 50, maxlength: 20
   .field.form-group.col-xs-4
     = f.label 'No.'
-    = f.text_field :receipt_number, class: 'form-control'
+    = f.text_field :receipt_number, class: 'form-control', disabled: @disabled
   .field.form-group.col-xs-8
     = f.label :address
     = f.text_field :address, class: 'form-control', size: 50, maxlength: 50
   .field.form-group.col-xs-4
     = f.label :date_issued
     = f.text_field :date_issued, class: 'form-control date_picker'
+  = f.hidden_field :receipt_type
 
   .col-xs-12
     .row-fluid

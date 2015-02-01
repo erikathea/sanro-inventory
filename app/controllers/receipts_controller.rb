@@ -1,5 +1,6 @@
 class ReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
+  before_action :set_edit_enabled, only: [:add_delivery, :add_delivery_receipt, :add_sales_invoice]
 
   # GET /receipts
   # GET /receipts.json
@@ -17,8 +18,24 @@ class ReceiptsController < ApplicationController
     @receipt = Receipt.new
   end
 
+  def add_delivery
+    @receipt = Receipt.new
+    @receipt_type = Receipt::TYPES[:acquisition]
+  end
+
+  def add_delivery_receipt
+    @receipt = Receipt.new
+    @receipt_type = Receipt::TYPES[:delivery_receipt]
+  end
+
+  def add_sales_invoice
+    @receipt = Receipt.new
+    @receipt_type = Receipt::TYPES[:sales_invoice]
+  end
+
   # GET /receipts/1/edit
   def edit
+    @disabled = true
   end
 
   # POST /receipts
@@ -28,6 +45,7 @@ class ReceiptsController < ApplicationController
 
     respond_to do |format|
       if @receipt.save
+        @receipt.update_inventory
         format.html { redirect_to @receipt, notice: 'Receipt was successfully created.' }
         format.json { render :show, status: :created, location: @receipt }
       else
@@ -72,12 +90,13 @@ class ReceiptsController < ApplicationController
     def receipt_params
       params[:receipt][:date_issued] = Date.strptime(params[:receipt][:date_issued], "%m/%d/%Y")
       params.require(:receipt).permit(
-        :company_name, :receipt_number, :address, :date_issued, :total, :balance, :amount_received,
-        receipt_details_attributes: [:id, :_destroy, :qty, :unit, :unit_price, :total,
+        :company_name, :receipt_number, :address, :date_issued, :total, :balance, :amount_received, :type,
+        receipt_details_attributes: [:id, :_destroy, :qty, :unit, :unit_price, :total, :description, :part_number,
           item_attributes: [:id, :_destroy, :description, :part_number]]
       )
     end
 
-    def item_params
+    def set_edit_enabled
+      @disabled = false
     end
 end

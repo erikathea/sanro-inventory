@@ -1,18 +1,21 @@
 .nested-fields.col-xs-12
-  = f.fields_for :item do |item|
-    = render 'item', :f => item
-
+  .field.form-group.col-xs-3
+    = f.label :description
+    = f.text_field :description, class: 'form-control item_desc_field', placeholder: 'Description', disabled: @disabled
+  .field.form-group.col-xs-2
+    = label_tag 'Part'
+    = f.text_field :part_number, class: 'form-control item_part_field', placeholder: 'Part', disabled: @disabled
   .field.form-group.col-xs-1
     = f.label :qty
-    = f.number_field :qty, class: 'form-control', step: 0.01
+    = f.number_field :qty, class: 'form-control', step: 0.01, disabled: @disabled
   .field.form-group.col-xs-1
     = f.label :unit
-    = f.text_field :unit, class: 'form-control'
+    = f.text_field :unit, class: 'form-control', disabled: @disabled
   .field.form-group.col-xs-2
     = f.label 'Price'
-    = f.number_field :unit_price, class: 'form-control', step: 0.01
+    = f.number_field :unit_price, class: 'form-control', step: 0.01, disabled: @disabled
   .field.form-group.col-xs-2
     = f.label :total
-    = f.number_field :total, class: 'form-control', step: 0.01
+    = f.number_field :total, class: 'form-control', step: 0.01, disabled: @disabled
   .col-xs-1
     = link_to_remove_association " ", f, class: 'glyphicon glyphicon-remove-sign btn btn-link btn-xs'

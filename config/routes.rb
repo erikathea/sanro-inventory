@@ -54,7 +54,11 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'dashboard#index'
-  resources :receipts
+  resources :receipts do
+    get 'add_delivery', on: :new
+    get 'add_delivery_receipt', on: :new
+    get 'add_sales_invoice', on: :new
+  end
   get '/items/list_description' => 'items#list_description'
   get '/items/list_part_number' => 'items#list_part_number'
 end

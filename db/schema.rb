@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150126040018) do
+ActiveRecord::Schema.define(version: 20150201092032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,11 +38,13 @@ ActiveRecord::Schema.define(version: 20150126040018) do
     t.integer  "receipt_id"
     t.integer  "item_id"
     t.float    "qty"
-    t.string   "unit",       limit: 5
-    t.decimal  "unit_price",           precision: 15, scale: 2
-    t.decimal  "total",                precision: 15, scale: 2
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.string   "unit",        limit: 5
+    t.decimal  "unit_price",            precision: 15, scale: 2
+    t.decimal  "total",                 precision: 15, scale: 2
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "description"
+    t.string   "part_number"
   end
 
   add_index "receipt_details", ["item_id"], name: "index_receipt_details_on_item_id", using: :btree
@@ -52,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150126040018) do
     t.string   "receipt_number"
     t.string   "company_name",    limit: 20
     t.string   "address",         limit: 50
-    t.integer  "type"
+    t.integer  "receipt_type"
     t.decimal  "total",                      precision: 15, scale: 2
     t.decimal  "amount_received",            precision: 15, scale: 2
     t.decimal  "balance",                    precision: 15, scale: 2
@@ -62,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150126040018) do
   end
 
   create_table "sales", force: true do |t|
-    t.integer  "type"
+    t.integer  "sales_type"
     t.integer  "inventory_id"
     t.integer  "receipt_detail_id"
     t.datetime "created_at"
