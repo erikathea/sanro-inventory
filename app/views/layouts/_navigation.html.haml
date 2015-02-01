@@ -10,4 +10,7 @@
       = link_to 'Home', root_path, class: 'navbar-brand'
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
-        = render 'layouts/navigation_links'
+        %li= link_to 'New Delivery', add_delivery_new_receipt_path
+        %li= link_to 'Add DR', add_delivery_receipt_new_receipt_path
+        %li= link_to 'Add SI', add_sales_invoice_new_receipt_path
+      = render 'layouts/navigation_links'

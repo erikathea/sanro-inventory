@@ -10,7 +10,8 @@ class ReceiptDetail < ActiveRecord::Base
     end
     item.update_stock(stock(receipt_type, self.qty), self.unit_price)
     item.save
-    self.update_attributes(item: item)
+    self.item = item
+    self.save
   end
 
   private

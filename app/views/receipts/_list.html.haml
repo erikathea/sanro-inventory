@@ -1,0 +1,20 @@
+%table.table.table-hover.table-responsive.receipts
+  %thead
+    %tr
+      %th Date Issued
+      %th No.
+      %th Total Amount
+      %th
+      %th
+      %th
+
+  %tbody
+    - @receipts.each do |receipt|
+      %tr
+        %td= receipt.date_issued
+        %td= receipt.receipt_number
+        %td= receipt.total
+        %td= link_to 'Show', receipt
+        %td= link_to 'Edit', edit_receipt_path(receipt)
+        %td= link_to 'Destroy', receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
