@@ -20,17 +20,17 @@ class ReceiptsController < ApplicationController
 
   def add_delivery
     @receipt = Receipt.new
-    @receipt_type = Receipt::TYPES[:acquisition]
+    @receipt.receipt_type = Receipt::TYPES[:acquisition]
   end
 
   def add_delivery_receipt
     @receipt = Receipt.new
-    @receipt_type = Receipt::TYPES[:delivery_receipt]
+    @receipt.receipt_type = Receipt::TYPES[:delivery_receipt]
   end
 
   def add_sales_invoice
     @receipt = Receipt.new
-    @receipt_type = Receipt::TYPES[:sales_invoice]
+    @receipt.receipt_type = Receipt::TYPES[:sales_invoice]
   end
 
   # GET /receipts/1/edit
@@ -42,7 +42,6 @@ class ReceiptsController < ApplicationController
   # POST /receipts.json
   def create
     @receipt = Receipt.new(receipt_params)
-
     respond_to do |format|
       if @receipt.save
         @receipt.update_inventory
@@ -74,7 +73,7 @@ class ReceiptsController < ApplicationController
   def destroy
     @receipt.destroy
     respond_to do |format|
-      format.html { redirect_to receipts_url, notice: 'Receipt was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: 'Receipt was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -88,9 +87,9 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params[:receipt][:date_issued] = Date.strptime(params[:receipt][:date_issued], "%m/%d/%Y")
+      params[:receipt][:date_issued] = Date.strptime(params[:receipt][:date_issued], "%m/%d/%Y") if params[:receipt][:date_issued].present?
       params.require(:receipt).permit(
-        :company_name, :receipt_number, :address, :date_issued, :total, :balance, :amount_received, :type,
+        :company_name, :receipt_number, :address, :date_issued, :total, :balance, :amount_received, :receipt_type,
         receipt_details_attributes: [:id, :_destroy, :qty, :unit, :unit_price, :total, :description, :part_number,
           item_attributes: [:id, :_destroy, :description, :part_number]]
       )

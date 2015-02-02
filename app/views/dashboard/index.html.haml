@@ -1,2 +1,38 @@
-.row-fluid
-  = render 'receipts/list'
+%br
+.container#main-container{:role => 'tabpanel'}
+  %ul.nav.nav-tabs.padding-18{:role => 'tablist'}
+    %li#overview-tab.active
+      %a{:href=> '#overview-container', 'data-toggle' => 'tab'}
+        %h4 Overview
+    %li#inventory-tab
+      %a{:href=> '#inventory-container', 'data-toggle' => 'tab'}
+        %h4 Inventory
+    %li#delivery-tab
+      %a{:href=> '#delivery-container', 'data-toggle' => 'tab'}
+        %h4 Delivery
+    %li#dr-tab
+      %a{:href=> '#dr-container', 'data-toggle' => 'tab'}
+        %h4 DR List
+    %li#si-tab
+      %a{:href=> '#si-container', 'data-toggle' => 'tab'}
+        %h4 SI List
+  .tab-content{:role => 'tabcontent'}
+    #overview-container.tab-pane
+      .row-fluid
+        = render 'dashboard/overview'
+    #inventory-container.tab-pane
+      .row-fluid
+        %h3 Items & Stocks
+        = render 'inventories/list', :inventories => @inventories
+    #delivery-container.tab-pane
+      .row-fluid
+        %h3 Deliveries
+        = render 'receipts/list', :receipts => @delivery, :type => Receipt::TYPES[:acquisition]
+    #dr-container.tab-pane
+      .row-fluid
+        %h3 Delivery Receipts
+        = render 'receipts/list', :receipts => @dr, :type => Receipt::TYPES[:delivery_receipt]
+    #si-container.tab-pane
+      .row-fluid
+        %h3 Sales Invoices
+        = render 'receipts/list', :receipts => @si, :type => Receipt::TYPES[:sales_invoice]

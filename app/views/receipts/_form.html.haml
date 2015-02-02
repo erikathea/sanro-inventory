@@ -7,7 +7,15 @@
           %li= msg
 
   .field.form-group.col-xs-8
-    = f.label 'Name'
+    - case @receipt.read_attribute(:receipt_type)
+    - when Receipt::TYPES[:acquisition]
+      = f.label :company_name, "Supplier"
+    - when Receipt::TYPES[:delivery_receipt]
+      = f.label :company_name, "Delivered to"
+    - when Receipt::TYPES[:sales_invoice]
+      = f.label :company_name, "Sold to"
+    - else
+      = f.label :company_name
     = f.text_field :company_name, class: 'form-control', size: 50, maxlength: 20
   .field.form-group.col-xs-4
     = f.label 'No.'

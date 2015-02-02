@@ -1,6 +1,36 @@
-%p#notice= notice
+.row-fluid
+  - case @receipt.read_attribute(:receipt_type)
+  - when Receipt::TYPES[:acquisition]
+    %h4= "Delivery no. #{@receipt.receipt_number} from #{@receipt.company_name}"
+  - when Receipt::TYPES[:delivery_receipt]
+    %h4= "DR no. #{@receipt.receipt_number}"
+  - when Receipt::TYPES[:sales_invoice]
+    %h4= "SI no. #{@receipt.receipt_number}"
 
+  %h5= "Total Amount #{@receipt.total}"
+  - if @receipt.balance.present? && !@receipt.balance.zero?
+    %h5= "Balance #{@receipt.balance}"
+
+  %table.table.table-hover.table-responsive.details
+    %thead
+      %tr
+        %th Description
+        %th Part
+        %th Qty
+        %th Unit
+        %th Unit Price
+        %th Total
+
+    %tbody
+      - @receipt.receipt_details.each do |detail|
+        %tr
+          %td= detail.description
+          %td= detail.part_number
+          %td= detail.qty
+          %td= detail.unit
+          %td= detail.unit_price
+          %td= detail.total
 
 = link_to 'Edit', edit_receipt_path(@receipt)
 \|
-= link_to 'Back', receipts_path
+= link_to 'Back', root_path

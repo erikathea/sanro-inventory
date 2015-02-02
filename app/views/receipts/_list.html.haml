@@ -3,16 +3,26 @@
     %tr
       %th Date Issued
       %th No.
+      - case type
+      - when Receipt::TYPES[:acquisition]
+        %th Supplier
+      - when Receipt::TYPES[:delivery_receipt]
+        %th Delivered to
+      - when Receipt::TYPES[:sales_invoice]
+        %th Sold to
+      - else
+        %th Name
       %th Total Amount
       %th
       %th
       %th
 
   %tbody
-    - @receipts.each do |receipt|
+    - receipts.each do |receipt|
       %tr
         %td= receipt.date_issued
         %td= receipt.receipt_number
+        %td= receipt.company_name
         %td= receipt.total
         %td= link_to 'Show', receipt
         %td= link_to 'Edit', edit_receipt_path(receipt)

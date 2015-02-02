@@ -9,7 +9,7 @@ class Receipt < ActiveRecord::Base
 
   def update_inventory
     self.receipt_details.each do |receipt_detail|
-      receipt_detail.create_or_update_inventory_item(self.receipt_type)
+      receipt_detail.create_or_update_inventory_item(self.read_attribute(:receipt_type))
     end
   end
 
