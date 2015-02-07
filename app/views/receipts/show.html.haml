@@ -19,6 +19,7 @@
         %th Qty
         %th Unit
         %th Unit Price
+        %th Selling Price
         %th Total
 
     %tbody
@@ -29,6 +30,7 @@
           %td= detail.qty
           %td= detail.unit
           %td= detail.unit_price
+          %td= detail.selling_price
           %td= detail.total
 
 = link_to 'Edit', edit_receipt_path(@receipt)

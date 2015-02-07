@@ -1,0 +1,17 @@
+%table.table.table-hover.table-responsive.receipts
+  %thead
+    %tr
+      %th Description
+      %th Part
+      %th Current Stock
+      %th Unit Price
+      %th Selling Price
+
+  %tbody
+    - items.each do |item|
+      %tr
+        %td= item.description
+        %td= item.part_number
+        %td= item.current_stock
+
+        %td= item.selling_price

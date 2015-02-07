@@ -1,6 +1,7 @@
 class ReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
   before_action :set_edit_enabled, only: [:add_delivery, :add_delivery_receipt, :add_sales_invoice]
+  before_action :set_is_outgoing, only: [:add_delivery_receipt, :add_sales_invoice]
 
   # GET /receipts
   # GET /receipts.json
@@ -90,12 +91,16 @@ class ReceiptsController < ApplicationController
       params[:receipt][:date_issued] = Date.strptime(params[:receipt][:date_issued], "%m/%d/%Y") if params[:receipt][:date_issued].present?
       params.require(:receipt).permit(
         :company_name, :receipt_number, :address, :date_issued, :total, :balance, :amount_received, :receipt_type,
-        receipt_details_attributes: [:id, :_destroy, :qty, :unit, :unit_price, :total, :description, :part_number,
+        receipt_details_attributes: [:id, :_destroy, :qty, :unit, :unit_price, :selling_price, :total, :description, :part_number,
           item_attributes: [:id, :_destroy, :description, :part_number]]
       )
     end
 
     def set_edit_enabled
       @disabled = false
+    end
+
+    def set_is_outgoing
+      @is_outgoing = true
     end
 end

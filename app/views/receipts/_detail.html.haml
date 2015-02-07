@@ -13,7 +13,10 @@
     = f.text_field :unit, class: 'form-control', disabled: @disabled
   .field.form-group.col-xs-2.unit_price
     = f.label 'Price'
-    = f.number_field :unit_price, class: 'form-control', step: 0.01, disabled: @disabled
+    - if @is_outgoing
+      = f.number_field :selling_price, class: 'form-control', step: 0.01, disabled: @disabled
+    - else
+      = f.number_field :unit_price, class: 'form-control', step: 0.01, disabled: @disabled
   .field.form-group.col-xs-2.total
     = f.label :total
     = f.number_field :total, class: 'form-control', step: 0.01, disabled: @disabled
