@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150201092032) do
+ActiveRecord::Schema.define(version: 20150207075310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,13 +38,14 @@ ActiveRecord::Schema.define(version: 20150201092032) do
     t.integer  "receipt_id"
     t.integer  "item_id"
     t.float    "qty"
-    t.string   "unit",        limit: 5
-    t.decimal  "unit_price",            precision: 15, scale: 2
-    t.decimal  "total",                 precision: 15, scale: 2
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.string   "unit",          limit: 5
+    t.decimal  "unit_price",              precision: 15, scale: 2
+    t.decimal  "total",                   precision: 15, scale: 2
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.string   "description"
     t.string   "part_number"
+    t.decimal  "selling_price",           precision: 15, scale: 2
   end
 
   add_index "receipt_details", ["item_id"], name: "index_receipt_details_on_item_id", using: :btree
@@ -62,17 +63,6 @@ ActiveRecord::Schema.define(version: 20150201092032) do
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
   end
-
-  create_table "sales", force: true do |t|
-    t.integer  "sales_type"
-    t.integer  "inventory_id"
-    t.integer  "receipt_detail_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "sales", ["inventory_id"], name: "index_sales_on_inventory_id", using: :btree
-  add_index "sales", ["receipt_detail_id"], name: "index_sales_on_receipt_detail_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
