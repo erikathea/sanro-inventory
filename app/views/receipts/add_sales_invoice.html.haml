@@ -1,5 +1,10 @@
-%h1 New Sales Invoice
-
-= render 'form'
+.row
+  %h1 New Sales Invoice
+  .col-xs-12
+    .row-fluid.bg-info
+      %h3 Stock List
+      = render 'inventories/list', :inventories => @inventories
+  .col-xs-12
+    = render 'form'
 
 = link_to 'Back', receipts_path

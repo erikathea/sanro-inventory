@@ -2,7 +2,7 @@ class ReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
   before_action :set_edit_enabled, only: [:add_delivery, :add_delivery_receipt, :add_sales_invoice]
   before_action :set_is_outgoing, only: [:add_delivery_receipt, :add_sales_invoice]
-
+  before_action :set_inventories, only: [:add_delivery_receipt, :add_sales_invoice]
   # GET /receipts
   # GET /receipts.json
   def index
@@ -84,6 +84,10 @@ class ReceiptsController < ApplicationController
     def set_receipt
       @receipt = Receipt.find(params[:id])
       @receipt.date_issued = @receipt.date_issued.strftime("%m/%d/%Y")
+    end
+
+    def set_inventories
+      @inventories = Inventory.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
