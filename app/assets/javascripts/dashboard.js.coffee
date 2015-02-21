@@ -9,5 +9,11 @@ ready = ->
       'order': [[0, 'desc']]
   $('#receipt_date_issued').datepicker()
 
+  $('input').on('keyup', (e) ->
+    this.value = this.value.toUpperCase()
+    return
+  )
+  return
+
 $(document).ready(ready)
 $(document).on('page:load', ready)
