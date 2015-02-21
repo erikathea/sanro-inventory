@@ -25,7 +25,7 @@
     = f.text_field :address, class: 'form-control', size: 50, maxlength: 50
   .field.form-group.col-xs-4
     = f.label :date_issued
-    = f.text_field :date_issued, class: 'form-control date_picker'
+    = f.text_field :date_issued, class: 'form-control date_picker', readonly: true
   = f.hidden_field :receipt_type
 
   .col-xs-12
