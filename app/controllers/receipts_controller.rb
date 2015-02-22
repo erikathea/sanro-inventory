@@ -45,7 +45,7 @@ class ReceiptsController < ApplicationController
     @receipt = Receipt.new(receipt_params)
     respond_to do |format|
       if @receipt.save
-        @receipt.update_inventory
+        # @receipt.update_inventory
         format.html { redirect_to @receipt, notice: 'Receipt was successfully created.' }
         format.json { render :show, status: :created, location: @receipt }
       else

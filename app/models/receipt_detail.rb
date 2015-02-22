@@ -1,11 +1,15 @@
 class ReceiptDetail < ActiveRecord::Base
   belongs_to :receipt
   belongs_to :item
-  before_save :strip_and_upcase_strings
+
   accepts_nested_attributes_for :item, :reject_if => :all_blank, :allow_destroy => true
+
   validates :qty, presence: :true
   validates :description, presence: :true
   validates :part_number, presence: :true
+  validate :has_item
+
+  before_save :strip_and_upcase_strings
 
   def create_or_update_inventory_item(receipt_type)
     if receipt_type == Receipt::TYPES[:acquisition]
@@ -16,6 +20,10 @@ class ReceiptDetail < ActiveRecord::Base
   end
 
   private
+  def has_item
+    pry
+  end
+
   def incoming_inventory
     item = Item.find_by(description: self.description.upcase, part_number: self.part_number.upcase)
     if !item.present?

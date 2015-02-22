@@ -7,6 +7,8 @@ class Receipt < ActiveRecord::Base
   validates :date_issued, presence: :true
   validates :receipt_number, presence: :true
 
+  before_save :add_receipt_details_item_id
+
   TYPES = {
     :acquisition => 0,
     :delivery_receipt => 1,
@@ -34,6 +36,16 @@ class Receipt < ActiveRecord::Base
   def has_one_receipt_detail
     if self.receipt_details.empty?
       errors.add(:receipt_details, ': Please add at least one item')
+    end
+  end
+
+  def add_receipt_details_item_id
+    self.receipt_details.each do |detail|
+      item = Item.find_by(description: detail.description.upcase, part_number: detail.part_number.upcase)
+      if read_attribute(:receipt_type) == Receipt::TYPES[:acquisition] && !item.present?
+        item = Item.new(description: detail.description.upcase, part_number: detail.part_number.upcase)
+      end
+      detail.item = item
     end
   end
 end
