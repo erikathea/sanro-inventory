@@ -92,6 +92,7 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
+      params[:receipt][:date_issued] = Date.strptime(params[:receipt][:date_issued], "%m/%d/%Y") if params[:receipt][:date_issued].present?
       params.require(:receipt).permit(
         :company_name, :receipt_number, :address, :date_issued, :total, :balance, :amount_received, :receipt_type,
         receipt_details_attributes: [:id, :_destroy, :qty, :unit, :unit_price, :selling_price, :total, :description, :part_number,
