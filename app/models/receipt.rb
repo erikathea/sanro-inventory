@@ -1,6 +1,12 @@
 class Receipt < ActiveRecord::Base
-  has_many :receipt_details
+  has_many :receipt_details, dependent: :destroy
   accepts_nested_attributes_for :receipt_details, :reject_if => :all_blank, :allow_destroy => true
+
+  validates_associated :receipt_details
+  validate :has_one_receipt_detail
+  validates :date_issued, presence: :true
+  validates :receipt_number, presence: :true
+
   TYPES = {
     :acquisition => 0,
     :delivery_receipt => 1,
@@ -21,6 +27,13 @@ class Receipt < ActiveRecord::Base
       return "DR"
     when Receipt::TYPES[:sales_invoice]
       return "SI"
+    end
+  end
+
+  private
+  def has_one_receipt_detail
+    if self.receipt_details.empty?
+      errors.add(:receipt_details, ': Please add at least one item')
     end
   end
 end
