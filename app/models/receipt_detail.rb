@@ -4,6 +4,8 @@ class ReceiptDetail < ActiveRecord::Base
   before_save :strip_and_upcase_strings
   accepts_nested_attributes_for :item, :reject_if => :all_blank, :allow_destroy => true
   validates :qty, presence: :true
+  validates :description, presence: :true
+  validates :part_number, presence: :true
 
   def create_or_update_inventory_item(receipt_type)
     if receipt_type == Receipt::TYPES[:acquisition]
