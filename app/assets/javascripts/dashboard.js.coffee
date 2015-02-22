@@ -7,6 +7,10 @@ ready = ->
       sPaginationType: 'full_numbers'
       bJQueryUI: true
       'order': [[0, 'desc']]
+      lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
+      pageLength: 50
+      pagingType: 'simple_numbers'
+      dom: '<"top"lf>rt<"bottom"ip><"clear">'
   $('#receipt_date_issued').datepicker()
 
   ### user input must be uppercase ###
