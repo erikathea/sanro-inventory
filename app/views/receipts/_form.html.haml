@@ -45,7 +45,7 @@
       = f.label 'Amount Paid'
     - else
       = f.label :amount_received
-    = f.number_field :amount_received, class: 'form-control', step: 0.01
+    = f.number_field :amount_received, min: 0, class: 'form-control', step: 0.01
   .col-xs-8
   .field.form-group.col-xs-4
     = f.label :balance
