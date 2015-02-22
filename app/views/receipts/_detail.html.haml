@@ -1,16 +1,16 @@
-.nested-fields.col-xs-12
+.nested-fields.col-xs-12.receipt-detail
   .field.form-group.col-xs-3
     = f.label :description
-    = f.text_field :description, class: 'form-control item_desc_field', placeholder: 'Description', disabled: @disabled
+    = f.text_field :description, class: 'form-control item_desc_field', placeholder: 'DESCRIPTION', disabled: @disabled
   .field.form-group.col-xs-2
     = label_tag 'Part'
-    = f.text_field :part_number, class: 'form-control item_part_field', placeholder: 'Part', disabled: @disabled
+    = f.text_field :part_number, class: 'form-control item_part_field', placeholder: 'PART', disabled: @disabled
   .field.form-group.col-xs-1.qty
     = f.label :qty
     = f.number_field :qty, class: 'form-control', step: 0.01, disabled: @disabled
   .field.form-group.col-xs-1
     = f.label :unit
-    = f.text_field :unit, class: 'form-control', disabled: @disabled
+    = f.text_field :unit, value: f.object.unit.blank? ? 'PC':f.object.unit, class: 'form-control', disabled: @disabled
   .field.form-group.col-xs-2.unit_price
     = f.label 'Price'
     - if @is_outgoing
@@ -19,6 +19,6 @@
       = f.number_field :unit_price, class: 'form-control', step: 0.01, disabled: @disabled
   .field.form-group.col-xs-2.total
     = f.label :total
-    = f.number_field :total, class: 'form-control', step: 0.01, disabled: @disabled
+    = f.number_field :total, class: 'form-control', step: 0.01, disabled: @disabled, readonly: true
   .col-xs-1
     = link_to_remove_association " ", f, class: 'glyphicon glyphicon-remove-sign btn btn-link btn-xs'
