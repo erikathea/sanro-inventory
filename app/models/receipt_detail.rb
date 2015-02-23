@@ -21,7 +21,7 @@ class ReceiptDetail < ActiveRecord::Base
 
   private
   def has_item
-    pry
+    # TODO
   end
 
   def incoming_inventory
