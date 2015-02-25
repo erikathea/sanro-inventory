@@ -20,7 +20,7 @@ ready = ->
   )
 
   ### calculate receipt_detail total ###
-  $('#new_receipt').on('cocoon:after-insert', (e, detail) ->
+  $('#new_receipt').on('cocoon:before-insert', (e, detail) ->
     $qty_input = $(detail.find('div.qty input'))
     $qty_input.on('focusout', ->
       $row = $(this).parent().parent()
