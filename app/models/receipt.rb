@@ -1,14 +1,17 @@
 class Receipt < ActiveRecord::Base
   has_many :receipt_details, dependent: :destroy
+  has_many :incoming_receipt_details, dependent: :destroy
+  has_many :outgoing_receipt_details, dependent: :destroy
+  delegate :incoming_receipt_details, :outgoing_receipt_details, to: :receipt_details
   accepts_nested_attributes_for :receipt_details, :reject_if => :all_blank, :allow_destroy => true
 
-  validates_associated :receipt_details, if: :is_outgoing?
+  validates_associated :receipt_details
   validate :has_one_receipt_detail?
-  validate :has_filled_receipt_details?, if: :is_incoming?
+  validate :has_filled_receipt_details?
   validates :date_issued, presence: :true
   validates :receipt_number, presence: :true
 
-  before_save :add_receipt_details_item_id
+  before_save :add_receipt_details_item_id, if: :is_outgoing?
 
   TYPES = {
     :acquisition => 0,
@@ -42,8 +45,15 @@ class Receipt < ActiveRecord::Base
 
   def has_filled_receipt_details?
     self.receipt_details.each do |detail|
+      if(is_incoming?)
+        is_price_present = detail.unit_price.present?
+      else
+        is_price_present = detail.selling_price.present?
+      end
+
       if(detail.description.empty? ||
         detail.part_number.empty? ||
+        !is_price_present ||
         !detail.qty.present?)
         errors.add(:receipt_details, ': Please complete the receipt details')
       end

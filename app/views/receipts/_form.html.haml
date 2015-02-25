@@ -33,7 +33,10 @@
       = f.fields_for :receipt_details do |receipt_detail|
         = render 'detail', :f => receipt_detail
       .col-xs-12
-        = link_to_add_association 'Add Item', f, :receipt_details, :partial => 'receipts/detail', class: 'glyphicon glyphicon-plus btn btn-link btn-xs', :wrap_object => Proc.new {|receipt_detail| receipt_detail.item = Item.new; receipt_detail }
+        - if @receipt.read_attribute(:receipt_type) == Receipt::TYPES[:acquisition]
+          = link_to_add_association 'Add Item', f, :receipt_details, :partial => 'receipts/detail', class: 'glyphicon glyphicon-plus btn btn-link btn-xs', :wrap_object => Proc.new {|receipt_detail| receipt_detail = IncomingReceiptDetail.new }
+        - else
+          = link_to_add_association 'Add Item', f, :receipt_details, :partial => 'receipts/detail', class: 'glyphicon glyphicon-plus btn btn-link btn-xs', :wrap_object => Proc.new {|receipt_detail| receipt_detail = OutgoingReceiptDetail.new }
 
   .col-xs-8
   .field.form-group.col-xs-4
