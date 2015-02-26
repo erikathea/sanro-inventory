@@ -1,0 +1,23 @@
+rtf to txt http://document.online-convert.com/convert-to-txt
+
+Open rails console (rails c)
+copy paste commands below:
+a = []
+b = []
+File.readlines('rtfdata.txt').each do |line|
+  if !( (line.include? "\tPage") || (line.include? "Description\t") || (line.include? "Grand Total\t") || line.chomp.empty? )
+    if line.split("\t").size > 1
+      b << line.chomp
+    else
+      a << line.chomp
+    end
+  end
+end
+
+b.each do |info|
+  data_array = info.split("\t")
+  item = Item.new(description:data_array[0], part_number:data_array[1])
+  item.save
+  inventory = Inventory.new(item:item, current_stock:data_array[2], unit_price:data_array[3])
+  inventory.save
+end
