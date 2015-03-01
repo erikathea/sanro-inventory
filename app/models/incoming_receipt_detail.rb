@@ -1,7 +1,9 @@
-class IncomingReceiptDetail < ReceiptDetail
-  validates :unit_price, presence: :true
+class IncomingReceiptDetail < ActiveRecord::Base
+  belongs_to :incoming_receipt
 
-  def compute_total_unit_price
-    self.total = self.qty * self.unit_price
+  private
+  def strip_and_upcase_strings
+    self.description = self.description.strip.upcase
+    self.part_number = self.part_number.strip.upcase
   end
 end

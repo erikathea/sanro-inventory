@@ -1,0 +1,31 @@
+= form_for @incoming_receipt do |f|
+  - if @incoming_receipt.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@incoming_receipt.errors.count, "error")} prohibited this incoming_receipt from being saved:"
+      %ul
+        - @incoming_receipt.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :receipt_number
+    = f.text_field :receipt_number
+  .field
+    = f.label :supplier
+    = f.text_field :supplier
+  .field
+    = f.label :address
+    = f.text_field :address
+  .field
+    = f.label :date_issued
+    = f.datetime_select :date_issued
+  .field
+    = f.label :total
+    = f.text_field :total
+  .field
+    = f.label :amount_received
+    = f.text_field :amount_received
+  .field
+    = f.label :balance
+    = f.text_field :balance
+  .actions
+    = f.submit 'Save'

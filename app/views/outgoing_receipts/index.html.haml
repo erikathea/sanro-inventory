@@ -1,0 +1,35 @@
+%h1 Listing outgoing_receipts
+
+%table
+  %thead
+    %tr
+      %th Receipt number
+      %th Client
+      %th Address
+      %th Date issued
+      %th Total
+      %th Amount received
+      %th Balance
+      %th Type
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @outgoing_receipts.each do |outgoing_receipt|
+      %tr
+        %td= outgoing_receipt.receipt_number
+        %td= outgoing_receipt.client
+        %td= outgoing_receipt.address
+        %td= outgoing_receipt.date_issued
+        %td= outgoing_receipt.total
+        %td= outgoing_receipt.amount_received
+        %td= outgoing_receipt.balance
+        %td= outgoing_receipt.type
+        %td= link_to 'Show', outgoing_receipt
+        %td= link_to 'Edit', edit_outgoing_receipt_path(outgoing_receipt)
+        %td= link_to 'Destroy', outgoing_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Outgoing receipt', new_outgoing_receipt_path

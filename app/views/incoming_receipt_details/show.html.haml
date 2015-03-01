@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Incoming receipt:
+  = @incoming_receipt_detail.incoming_receipt
+%p
+  %b Description:
+  = @incoming_receipt_detail.description
+%p
+  %b Part number:
+  = @incoming_receipt_detail.part_number
+%p
+  %b Total:
+  = @incoming_receipt_detail.total
+%p
+  %b Unit price:
+  = @incoming_receipt_detail.unit_price
+%p
+  %b Qty:
+  = @incoming_receipt_detail.qty
+%p
+  %b Unit:
+  = @incoming_receipt_detail.unit
+
+= link_to 'Edit', edit_incoming_receipt_detail_path(@incoming_receipt_detail)
+\|
+= link_to 'Back', incoming_receipt_details_path

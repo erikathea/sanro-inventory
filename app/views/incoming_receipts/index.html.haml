@@ -1,0 +1,33 @@
+%h1 Listing incoming_receipts
+
+%table
+  %thead
+    %tr
+      %th Receipt number
+      %th Supplier
+      %th Address
+      %th Date issued
+      %th Total
+      %th Amount received
+      %th Balance
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @incoming_receipts.each do |incoming_receipt|
+      %tr
+        %td= incoming_receipt.receipt_number
+        %td= incoming_receipt.supplier
+        %td= incoming_receipt.address
+        %td= incoming_receipt.date_issued
+        %td= incoming_receipt.total
+        %td= incoming_receipt.amount_received
+        %td= incoming_receipt.balance
+        %td= link_to 'Show', incoming_receipt
+        %td= link_to 'Edit', edit_incoming_receipt_path(incoming_receipt)
+        %td= link_to 'Destroy', incoming_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Incoming receipt', new_incoming_receipt_path

@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Receipt number:
+  = @incoming_receipt.receipt_number
+%p
+  %b Supplier:
+  = @incoming_receipt.supplier
+%p
+  %b Address:
+  = @incoming_receipt.address
+%p
+  %b Date issued:
+  = @incoming_receipt.date_issued
+%p
+  %b Total:
+  = @incoming_receipt.total
+%p
+  %b Amount received:
+  = @incoming_receipt.amount_received
+%p
+  %b Balance:
+  = @incoming_receipt.balance
+
+= link_to 'Edit', edit_incoming_receipt_path(@incoming_receipt)
+\|
+= link_to 'Back', incoming_receipts_path

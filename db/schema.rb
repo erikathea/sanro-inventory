@@ -11,10 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301081728) do
+ActiveRecord::Schema.define(version: 20150301182640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "incoming_receipt_details", force: true do |t|
+    t.integer  "incoming_receipt_id"
+    t.string   "description"
+    t.string   "part_number"
+    t.decimal  "total",                         precision: 15, scale: 2
+    t.decimal  "unit_price",                    precision: 15, scale: 2
+    t.float    "qty"
+    t.string   "unit",                limit: 5
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "incoming_receipt_details", ["incoming_receipt_id"], name: "index_incoming_receipt_details_on_incoming_receipt_id", using: :btree
+
+  create_table "incoming_receipts", force: true do |t|
+    t.string   "receipt_number",  limit: 20
+    t.string   "supplier",        limit: 50
+    t.string   "address",         limit: 50
+    t.datetime "date_issued"
+    t.decimal  "total",                      precision: 15, scale: 2
+    t.decimal  "amount_received",            precision: 15, scale: 2
+    t.decimal  "balance",                    precision: 15, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "inventories", force: true do |t|
     t.integer  "item_id"
@@ -30,6 +56,32 @@ ActiveRecord::Schema.define(version: 20150301081728) do
     t.string   "description"
     t.string   "part_number"
     t.decimal  "selling_price", precision: 15, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "outgoing_receipt_details", force: true do |t|
+    t.integer  "outgoing_receipt_id"
+    t.integer  "inventory_id"
+    t.decimal  "total",                         precision: 15, scale: 2
+    t.float    "qty"
+    t.string   "unit",                limit: 5
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "outgoing_receipt_details", ["inventory_id"], name: "index_outgoing_receipt_details_on_inventory_id", using: :btree
+  add_index "outgoing_receipt_details", ["outgoing_receipt_id"], name: "index_outgoing_receipt_details_on_outgoing_receipt_id", using: :btree
+
+  create_table "outgoing_receipts", force: true do |t|
+    t.string   "receipt_number",  limit: 20
+    t.string   "client",          limit: 50
+    t.string   "address",         limit: 50
+    t.datetime "date_issued"
+    t.decimal  "total",                      precision: 15, scale: 2
+    t.decimal  "amount_received",            precision: 15, scale: 2
+    t.decimal  "balance",                    precision: 15, scale: 2
+    t.integer  "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

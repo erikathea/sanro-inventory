@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Outgoing receipt:
+  = @outgoing_receipt_detail.outgoing_receipt
+%p
+  %b Total:
+  = @outgoing_receipt_detail.total
+%p
+  %b Qty:
+  = @outgoing_receipt_detail.qty
+%p
+  %b Unit:
+  = @outgoing_receipt_detail.unit
+%p
+  %b Inventory:
+  = @outgoing_receipt_detail.inventory
+
+= link_to 'Edit', edit_outgoing_receipt_detail_path(@outgoing_receipt_detail)
+\|
+= link_to 'Back', outgoing_receipt_details_path

@@ -1,0 +1,29 @@
+%h1 Listing outgoing_receipt_details
+
+%table
+  %thead
+    %tr
+      %th Outgoing receipt
+      %th Total
+      %th Qty
+      %th Unit
+      %th Inventory
+      %th
+      %th
+      %th
+      
+  %tbody
+    - @outgoing_receipt_details.each do |outgoing_receipt_detail|
+      %tr
+        %td= outgoing_receipt_detail.outgoing_receipt
+        %td= outgoing_receipt_detail.total
+        %td= outgoing_receipt_detail.qty
+        %td= outgoing_receipt_detail.unit
+        %td= outgoing_receipt_detail.inventory
+        %td= link_to 'Show', outgoing_receipt_detail
+        %td= link_to 'Edit', edit_outgoing_receipt_detail_path(outgoing_receipt_detail)
+        %td= link_to 'Destroy', outgoing_receipt_detail, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Outgoing receipt detail', new_outgoing_receipt_detail_path

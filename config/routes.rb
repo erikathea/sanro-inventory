@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :outgoing_receipt_details
+
+  resources :incoming_receipt_details
+
+  resources :outgoing_receipts
+
+  resources :incoming_receipts
+
   resources :inventories
 
   resources :items
