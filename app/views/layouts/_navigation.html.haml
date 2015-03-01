@@ -1,5 +1,5 @@
 -# navigation styled for Bootstrap 3.0
-%nav.navbar.navbar-default.navbar-fixed-top
+%nav.navbar.navbar-default
   .container
     .navbar-header
       %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
@@ -9,10 +9,10 @@
         %span.icon-bar
       = link_to 'Home', root_path, class: 'navbar-brand'
     .collapse.navbar-collapse
-      - if user_signed_in?
-        %ul.nav.navbar-nav
-          %li= link_to 'New Delivery', add_delivery_new_receipt_path
-          %li= link_to 'Add DR', add_delivery_receipt_new_receipt_path
-          %li= link_to 'Add SI', add_sales_invoice_new_receipt_path
       = render 'layouts/navigation_links'
-
+%nav.navbar-default
+  - if user_signed_in?
+    %ul.nav.nav-tabs#sub_nav
+      %li= link_to 'Inventory List', inventories_path, class: 'glyphicon glyphicon-tasks btn btn-link btn-xs'
+      %li= link_to 'Manage Items', items_path, class: 'glyphicon glyphicon-briefcase btn btn-link btn-xs'
+      %li= link_to 'Add Inventory Item', new_item_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs'
