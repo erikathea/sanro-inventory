@@ -14,10 +14,10 @@ File.readlines('rtfdata.txt').each do |line|
   end
 end
 
+content = ""
 b.each do |info|
   data_array = info.split("\t")
-  item = Item.new(description:data_array[0], part_number:data_array[1])
-  item.save
-  inventory = Inventory.new(item:item, current_stock:data_array[2], unit_price:data_array[3])
-  inventory.save
+  content << "item = Item.where(description:'#{data_array[0]}', part_number:'#{data_array[1]}').first \n if(!item.present?) \n item = Item.new(description:'#{data_array[0]}', part_number:'#{data_array[1]}') \n item.save \n end \n if(item.id.present?) \n inventory = Inventory.new(item:item, current_stock:#{data_array[2]}, unit_price:#{data_array[3]}) \n inventory.save \n end \n \n"
 end
+
+target = File.write('db/seeds.rb', content)
