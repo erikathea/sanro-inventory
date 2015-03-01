@@ -1,11 +1,6 @@
 class Receipt < ActiveRecord::Base
-  has_many :receipt_details, dependent: :destroy
-  has_many :incoming_receipt_details, dependent: :destroy
-  has_many :outgoing_receipt_details, dependent: :destroy
-  delegate :incoming_receipt_details, :outgoing_receipt_details, to: :receipt_details
-  accepts_nested_attributes_for :receipt_details, :reject_if => :all_blank, :allow_destroy => true
+  self.inheritance_column = :receipt_type
 
-  validates_associated :receipt_details
   validate :has_one_receipt_detail?
   validate :has_filled_receipt_details?
   validates :date_issued, presence: :true

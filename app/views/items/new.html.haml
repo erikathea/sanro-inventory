@@ -1,0 +1,8 @@
+%h3
+  Add Inventory Item
+  %small
+    = link_to 'Cancel', items_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
+
+.row-fluid{data: { no_turbolink: true }}
+  = render 'form'
+

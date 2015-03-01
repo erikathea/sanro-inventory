@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Item:
+  = @inventory.item
+%p
+  %b Unit price:
+  = @inventory.unit_price
+%p
+  %b Current stock:
+  = @inventory.current_stock
+
+= link_to 'Edit', edit_inventory_path(@inventory)
+\|
+= link_to 'Back', inventories_path

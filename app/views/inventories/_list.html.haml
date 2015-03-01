@@ -1,17 +1,24 @@
-%table.table.table-hover.table-responsive.receipts
+%table.table.table-hover.table-responsive.inventory
   %thead
     %tr
-      %th Description
-      %th Part
-      %th Current Stock
+      %th ID
+      %th Description - Part No
       %th Unit Price
-      %th SRP
+      %th Selling Price
+      %th Current Stock
+      /%th
+      /%th
+      /%th
 
   %tbody
     - inventories.each do |inventory|
       %tr
-        %td= inventory.item.description
-        %td= inventory.item.part_number
-        %td= inventory.current_stock
+        %td= inventory.id
+        %td #{inventory.item.description} - #{inventory.item.part_number}
         %td= inventory.unit_price
         %td= inventory.item.selling_price
+        %td= inventory.current_stock
+        /%td= link_to 'Show', inventory
+        /%td= link_to 'Edit', edit_item_path(inventory.item)
+        /%td= link_to 'Destroy', inventory, :method => :delete, :data => { :confirm => 'Are you sure?' }
+

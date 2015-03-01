@@ -1,18 +1,12 @@
 class Item < ActiveRecord::Base
-  validate :check_description_part_number_combination
-  before_save :set_to_up_case
+  has_many :inventories, dependent: :destroy
+  accepts_nested_attributes_for :inventories, :reject_if => :all_blank, :allow_destroy => true
 
-  def check_description_part_number_combination
-    item = Item.find_by(description: self.description.upcase, part_number: self.part_number.upcase)
-    if item.present?
-      errors.add(:description, 'Item already exists.')
-      errors.add(:part_number, 'Item already exists.')
-    end
+  validates_associated :inventories
+  validates :description, presence: :true
+  validates :part_number, presence: :true
+
+  def total_stock
+    Inventory.where(item:self).sum(:current_stock)
   end
-
-  private
-    def set_to_up_case
-      self.description = self.description.upcase
-      self.part_number = self.part_number.upcase
-    end
 end
