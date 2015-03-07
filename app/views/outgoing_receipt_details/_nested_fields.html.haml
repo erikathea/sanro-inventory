@@ -1,0 +1,28 @@
+.nested-fields.col-xs-12.receipt-detail
+  %table.table.table-hover.table-responsive.receipt-details
+    %tbody
+      %tr
+        %td
+          .field.form-group.inventory-id
+            = f.label 'Inventory ID'
+            = f.text_field :inventory_id, class: 'form-control select-inventory-item', placeholder: 'Select inventory item'
+        %td
+          .field.form-group.qty
+            = f.label :qty
+            = f.number_field :qty, min: 1, class: 'form-control', step: 0.01
+        %td
+          .field.form-group
+            = f.label :unit
+            = f.text_field :unit, value: f.object.unit.blank? ? 'PC':f.object.unit, class: 'form-control'
+        %td
+          .field.form-group.selling-price.price
+            = f.label :selling_price
+            = f.number_field :selling_price, class: 'form-control', step: 0.01, disabled: @disabled
+        %td
+          .field.form-group.total
+            = f.label :total
+            = f.number_field :total, class: 'form-control', step: 0.01, disabled: @disabled, readonly: true
+        %td
+          .field.form-group
+            = f.hidden_field :id
+            = link_to_remove_association " ", f, class: 'glyphicon glyphicon-remove-sign btn btn-link btn-xs'

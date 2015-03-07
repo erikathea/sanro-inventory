@@ -1,4 +1,4 @@
-= form_for @outgoing_receipt do |f|
+= form_for @outgoing_receipt, html: { class: 'form-horizontal new_receipt', id:'outgoing_form' } do |f|
   - if @outgoing_receipt.errors.any?
     #error_explanation
       %h2= "#{pluralize(@outgoing_receipt.errors.count, "error")} prohibited this outgoing_receipt from being saved:"
@@ -6,29 +6,33 @@
         - @outgoing_receipt.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :receipt_number
-    = f.text_field :receipt_number
-  .field
-    = f.label :client
-    = f.text_field :client
-  .field
-    = f.label :address
-    = f.text_field :address
-  .field
+  .field.form-group.col-xs-6
     = f.label :date_issued
-    = f.datetime_select :date_issued
-  .field
+    = f.text_field :date_issued, class: 'receipt_date_issued form-control', readonly: true
+  .field.form-group.col-xs-6
+    = f.label :receipt_number
+    = f.text_field :receipt_number, class: 'form-control'
+  .field.form-group.col-xs-12
+    = f.label :client
+    = f.text_field :client, class: 'form-control'
+  .field.form-group.col-xs-12
+    = f.label :address
+    = f.text_field :address, class: 'form-control'
+  .field.form-group.col-xs-12
+    .row-fluid
+      = f.fields_for :outgoing_receipt_details do |receipt_detail|
+        = render 'outgoing_receipt_details/nested_fields', :f => receipt_detail
+      = link_to_add_association 'Add Receipt Item', f, :outgoing_receipt_details, :partial => 'outgoing_receipt_details/nested_fields', class: 'glyphicon glyphicon-plus btn btn-link btn-xs', :wrap_object => Proc.new {|receipt_detail| receipt_detail = OutgoingReceiptDetail.new }
+  .field.form-group.col-xs-4.receipt-total
     = f.label :total
-    = f.text_field :total
-  .field
+    = f.text_field :total, class: 'form-control', readonly:true
+  .field.form-group.col-xs-4.receipt-amount-received
     = f.label :amount_received
-    = f.text_field :amount_received
-  .field
+    = f.text_field :amount_received, class: 'form-control'
+  .field.form-group.col-xs-4.receipt-balance
     = f.label :balance
-    = f.text_field :balance
-  .field
-    = f.label :type
-    = f.text_field :type
+    = f.text_field :balance, class: 'form-control', readonly: true
+
   .actions
-    = f.submit 'Save'
+    = f.hidden_field :sale_type
+    = f.submit "Save #{@outgoing_receipt.type_title}", class: 'glyphicon glyphicon-floppy-saved btn btn-primary'

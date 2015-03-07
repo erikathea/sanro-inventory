@@ -3,8 +3,10 @@ class Receipt < ActiveRecord::Base
 
   validate :has_one_receipt_detail?
   validate :has_filled_receipt_details?
+
   validates :date_issued, presence: :true
   validates :receipt_number, presence: :true
+  validates :total, presence: :true
 
   before_save :add_receipt_details_item_id, if: :is_outgoing?
 

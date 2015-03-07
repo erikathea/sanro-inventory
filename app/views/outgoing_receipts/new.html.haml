@@ -1,5 +1,6 @@
-%h1 New outgoing_receipt
+%h3
+  Add #{@outgoing_receipt.type_title} Receipt
+  %small
+    = link_to 'Cancel', outgoing_receipts_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
 
 = render 'form'
-
-= link_to 'Back', outgoing_receipts_path

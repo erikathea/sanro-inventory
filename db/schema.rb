@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301182640) do
+ActiveRecord::Schema.define(version: 20150306221948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20150301182640) do
     t.string   "unit",                limit: 5
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "selling_price",                 precision: 15, scale: 2
   end
 
   add_index "outgoing_receipt_details", ["inventory_id"], name: "index_outgoing_receipt_details_on_inventory_id", using: :btree
@@ -81,7 +82,7 @@ ActiveRecord::Schema.define(version: 20150301182640) do
     t.decimal  "total",                      precision: 15, scale: 2
     t.decimal  "amount_received",            precision: 15, scale: 2
     t.decimal  "balance",                    precision: 15, scale: 2
-    t.integer  "type"
+    t.integer  "sale_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

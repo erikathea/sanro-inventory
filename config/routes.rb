@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   resources :incoming_receipt_details
 
-  resources :outgoing_receipts
+  resources :outgoing_receipts do
+    get 'add_si', on: :new
+    get 'add_dr', on: :new
+  end
 
   resources :incoming_receipts
 
