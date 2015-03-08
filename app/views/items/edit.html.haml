@@ -4,5 +4,5 @@
     = link_to 'Destroy', @item, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'glyphicon glyphicon-trash btn btn-link btn-xs'
   %small
     = link_to 'Back', items_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
-.row-fluid
+.row-fluid{data: {no_turbolink: true}}
   = render 'form'
