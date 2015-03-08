@@ -18,6 +18,6 @@
   .field.form-group.form-inline
     = f.fields_for :inventories do |inventory|
       = render 'inventories/fields', :f => inventory
-    = link_to_add_association 'Add Inventory', f, :inventories, :partial => 'inventories/fields',:wrap_object => Proc.new {|inventory| inventory = Inventory.new(item:@item) }, class: 'glyphicon glyphicon-plus btn btn-link btn-xs'
+    = link_to_add_association 'Add Inventory', f, :inventories, :partial => 'inventories/fields',:wrap_object => Proc.new {|inventory| inventory = Inventory.new(item:@item) }, class: 'glyphicon glyphicon-plus btn btn-link btn-xs', 'data-no-turbolink' => true
   .actions
     = f.submit 'Save Inventory Item', class: 'glyphicon glyphicon-floppy-saved btn btn-primary'

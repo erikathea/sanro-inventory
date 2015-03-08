@@ -1,5 +1,6 @@
-%h1 New incoming_receipt_detail
+%h3
+  Add Delivery Receipt
+  %small
+    = link_to 'Cancel', incoming_receipt_details_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
 
 = render 'form'
-
-= link_to 'Back', incoming_receipt_details_path

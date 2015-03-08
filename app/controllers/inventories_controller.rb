@@ -4,7 +4,7 @@ class InventoriesController < ApplicationController
   respond_to :html
 
   def index
-    @inventories = Inventory.all
+    @inventories = Inventory.includes(:item).all
     respond_with(@inventories)
   end
 

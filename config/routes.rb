@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   resources :incoming_receipt_details
 
-  resources :outgoing_receipts
+  resources :outgoing_receipts do
+    get 'add_si', on: :new
+    get 'add_dr', on: :new
+  end
 
   resources :incoming_receipts
 
@@ -14,9 +17,6 @@ Rails.application.routes.draw do
   devise_for :users
 
   root 'dashboard#index'
-
-  get '/items/list_description' => 'items#list_description'
-  get '/items/list_part_number' => 'items#list_part_number'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
