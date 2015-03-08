@@ -22,16 +22,16 @@
     .row-fluid
       = f.fields_for :outgoing_receipt_details do |receipt_detail|
         = render 'outgoing_receipt_details/nested_fields', :f => receipt_detail
-      = link_to_add_association 'Add Receipt Item', f, :outgoing_receipt_details, :partial => 'outgoing_receipt_details/nested_fields', class: 'glyphicon glyphicon-plus btn btn-link btn-xs', :wrap_object => Proc.new {|receipt_detail| receipt_detail = OutgoingReceiptDetail.new }
+      = link_to_add_association 'Add Receipt Item', f, :outgoing_receipt_details, :partial => 'outgoing_receipt_details/nested_fields', class: 'glyphicon glyphicon-plus btn btn-link btn-xs', :wrap_object => Proc.new {|receipt_detail| receipt_detail = OutgoingReceiptDetail.new }, 'data-no-turbolink' => true
   .field.form-group.col-xs-4.receipt-total
     = f.label :total
-    = f.text_field :total, class: 'form-control', readonly:true
+    = f.text_field :total, class: 'form-control'
   .field.form-group.col-xs-4.receipt-amount-received
     = f.label :amount_received
     = f.text_field :amount_received, class: 'form-control'
   .field.form-group.col-xs-4.receipt-balance
     = f.label :balance
-    = f.text_field :balance, class: 'form-control', readonly: true
+    = f.text_field :balance, class: 'form-control'
 
   .actions
     = f.hidden_field :sale_type

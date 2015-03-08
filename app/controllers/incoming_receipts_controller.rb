@@ -39,9 +39,28 @@ class IncomingReceiptsController < ApplicationController
   private
     def set_incoming_receipt
       @incoming_receipt = IncomingReceipt.find(params[:id])
+      @incoming_receipt.date_issued = @incoming_receipt.date_issued.strftime("%m/%d/%Y")
     end
 
     def incoming_receipt_params
-      params.require(:incoming_receipt).permit(:receipt_number, :supplier, :address, :date_issued, :total, :amount_received, :balance)
+      params.require(:incoming_receipt).permit(
+        :receipt_number,
+        :supplier,
+        :address,
+        :date_issued,
+        :total,
+        :amount_received,
+        :balance,
+        incoming_receipt_details_attributes: [
+          :id,
+          :_destroy,
+          :total,
+          :qty,
+          :unit,
+          :unit_price,
+          :description,
+          :part_number
+        ]
+      )
     end
 end

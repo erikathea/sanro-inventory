@@ -3,10 +3,14 @@
     %tbody
       %tr
         %td
-          .field.form-group.inventory-id
-            = f.label 'Inventory ID'
-            = f.text_field :inventory_id, class: 'form-control select-inventory-item', placeholder: 'Select inventory item'
-        %td.width-15
+          .field.form-group
+            = f.label :description
+            = f.text_field :description, class: 'form-control'
+        %td
+          .field.form-group
+            = f.label :part_number
+            = f.text_field :part_number, class: 'form-control'
+        %td.width-10
           .field.form-group.qty
             = f.label :qty
             = f.number_field :qty, min: 1, class: 'form-control', step: 0.01
@@ -15,9 +19,9 @@
             = f.label :unit
             = f.text_field :unit, value: f.object.unit.blank? ? 'PC':f.object.unit, class: 'form-control'
         %td.width-15
-          .field.form-group.selling-price.price
-            = f.label :selling_price
-            = f.number_field :selling_price, class: 'form-control', step: 0.01
+          .field.form-group.unit-price.price
+            = f.label :unit_price
+            = f.number_field :unit_price, class: 'form-control', step: 0.01
         %td
           .field.form-group.total
             = f.label :total

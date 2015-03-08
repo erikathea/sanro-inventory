@@ -46,13 +46,31 @@ ready  = ->
       $('.new_receipt div.receipt-total input').trigger('change')
       return
     )
-
-    ### user input must be uppercase ###
-    $('input').on('keyup', (e) ->
-      this.value = this.value.toUpperCase()
-      return
-    )
+    return
   )
+
+  $('.new_receipt .nested-fields div.qty input').on('change', (e, detail) ->
+    $row = $(this).parent().parent().parent()
+    $total = $row.find('div.total input')[0]
+
+    qty = parseFloat(this.value)
+    unit_price = parseFloat($row.find('div.price input')[0].value)
+    $total.value = parseFloat(qty * unit_price).toFixed(2)
+    $('.new_receipt div.receipt-total input').trigger('change')
+    return
+  )
+
+  $('.new_receipt .nested-fields div.price input').on('change', (e, detail) ->
+    $row = $(this).parent().parent().parent()
+    $total = $row.find('div.total input')[0]
+
+    qty = parseFloat($row.find('div.qty input')[0].value)
+    unit_price = parseFloat(this.value)
+    $total.value = parseFloat(qty * unit_price).toFixed(2)
+    $('.new_receipt div.receipt-total input').trigger('change')
+    return
+  )
+
 
   ### calculate receipt total ###
   $('.new_receipt div.receipt-total input').on('change', ->
@@ -80,3 +98,8 @@ ready  = ->
 
 $(document).ready(ready)
 $(document).on('page:change', ready)
+$(document).on 'page:fetch', ->
+  $('main').fadeOut 'slow'
+
+$(document).on 'page:restore', ->
+  $('main').fadeIn 'slow'

@@ -14,7 +14,7 @@
       %th
       %th
       %th
-      
+
   %tbody
     - @outgoing_receipts.each do |outgoing_receipt|
       %tr
@@ -25,7 +25,7 @@
         %td= outgoing_receipt.total
         %td= outgoing_receipt.amount_received
         %td= outgoing_receipt.balance
-        %td= outgoing_receipt.type
+        %td= outgoing_receipt.sale_type
         %td= link_to 'Show', outgoing_receipt
         %td= link_to 'Edit', edit_outgoing_receipt_path(outgoing_receipt)
         %td= link_to 'Destroy', outgoing_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }

@@ -1,4 +1,4 @@
-= form_for @incoming_receipt do |f|
+= form_for @incoming_receipt, html: { class: 'form-horizontal new_receipt', id:'incoming_form' } do |f|
   - if @incoming_receipt.errors.any?
     #error_explanation
       %h2= "#{pluralize(@incoming_receipt.errors.count, "error")} prohibited this incoming_receipt from being saved:"
@@ -6,26 +6,31 @@
         - @incoming_receipt.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :receipt_number
-    = f.text_field :receipt_number
-  .field
-    = f.label :supplier
-    = f.text_field :supplier
-  .field
-    = f.label :address
-    = f.text_field :address
-  .field
+  .field.form-group.col-xs-6
     = f.label :date_issued
-    = f.datetime_select :date_issued
-  .field
+    = f.text_field :date_issued, class: 'receipt_date_issued form-control', readonly: true
+  .field.form-group.col-xs-6
+    = f.label :receipt_number
+    = f.text_field :receipt_number, class: 'form-control'
+  .field.form-group.col-xs-12
+    = f.label :supplier
+    = f.text_field :supplier, class: 'form-control'
+  .field.form-group.col-xs-12
+    = f.label :address
+    = f.text_field :address, class: 'form-control'
+  .field.form-group.col-xs-12
+    .row-fluid
+      = f.fields_for :incoming_receipt_details do |receipt_detail|
+        = render 'incoming_receipt_details/nested_fields', :f => receipt_detail
+      = link_to_add_association 'Add Receipt Item', f, :incoming_receipt_details, :partial => 'incoming_receipt_details/nested_fields', class: 'glyphicon glyphicon-plus btn btn-link btn-xs', :wrap_object => Proc.new {|receipt_detail| receipt_detail = IncomingReceiptDetail.new }, 'data-no-turbolink' => true
+  .field.form-group.col-xs-4.receipt-total
     = f.label :total
-    = f.text_field :total
-  .field
+    = f.text_field :total, class: 'form-control'
+  .field.form-group.col-xs-4.receipt-amount-received
     = f.label :amount_received
-    = f.text_field :amount_received
-  .field
+    = f.text_field :amount_received, class: 'form-control'
+  .field.form-group.col-xs-4.receipt-balance
     = f.label :balance
-    = f.text_field :balance
+    = f.text_field :balance, class: 'form-control'
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save Delivery Receipt', class: 'glyphicon glyphicon-floppy-saved btn btn-primary'

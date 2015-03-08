@@ -34,7 +34,6 @@ class OutgoingReceiptsController < ApplicationController
 
   def create
     @outgoing_receipt = OutgoingReceipt.new(outgoing_receipt_params)
-    pry
     @outgoing_receipt.save
     respond_with(@outgoing_receipt)
   end
@@ -52,6 +51,7 @@ class OutgoingReceiptsController < ApplicationController
   private
     def set_outgoing_receipt
       @outgoing_receipt = OutgoingReceipt.find(params[:id])
+      @outgoing_receipt.date_issued = @outgoing_receipt.date_issued.strftime("%m/%d/%Y")
     end
 
     def outgoing_receipt_params
