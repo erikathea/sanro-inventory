@@ -7,6 +7,6 @@ class Item < ActiveRecord::Base
   validates :part_number, presence: :true
 
   def total_stock
-    self.inventories.sum(:current_stock)
+    self.inventories.map(&:current_stock).inject{|sum, x| sum + x}
   end
 end
