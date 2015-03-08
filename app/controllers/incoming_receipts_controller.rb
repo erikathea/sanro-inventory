@@ -39,7 +39,7 @@ class IncomingReceiptsController < ApplicationController
   private
     def set_incoming_receipt
       @incoming_receipt = IncomingReceipt.find(params[:id])
-      @incoming_receipt.date_issued = @incoming_receipt.date_issued.strftime("%m/%d/%Y")
+      @incoming_receipt.date_issued = @incoming_receipt.date_issued.strftime("%d/%m/%Y")
     end
 
     def incoming_receipt_params
