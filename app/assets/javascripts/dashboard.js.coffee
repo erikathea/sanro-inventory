@@ -46,6 +46,12 @@ ready  = ->
       $('.new_receipt div.receipt-total input').trigger('change')
       return
     )
+
+    ### user input must be uppercase ###
+    $('input').on('keyup', (e) ->
+      this.value = this.value.toUpperCase()
+      return
+    )
     return
   )
 

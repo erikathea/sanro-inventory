@@ -5,8 +5,17 @@ class Item < ActiveRecord::Base
   validates_associated :inventories
   validates :description, presence: :true
   validates :part_number, presence: :true
+  validate :item_already_exists?
 
   def total_stock
     self.inventories.map(&:current_stock).inject{|sum, x| sum + x}
+  end
+
+  private
+  def item_already_exists?
+    if(Item.find_by_description_and_part_number(self.description, self.part_number))
+      errors.add(:description, 'already exists')
+      errors.add(:part_number, 'already exists')
+    end
   end
 end
