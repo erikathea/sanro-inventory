@@ -13,7 +13,9 @@ ready  = ->
         pagingType: 'simple_numbers'
         dom: '<"top"lf>rt<"bottom"ip><"clear">'
 
-  $('.receipt_date_issued').datepicker()
+  $('.receipt_date_issued').datepicker(
+     dateFormat: "dd/mm/yy"
+  )
 
   ### user input must be uppercase ###
   $('input').on('keyup', (e) ->
