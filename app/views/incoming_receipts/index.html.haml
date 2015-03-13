@@ -1,6 +1,7 @@
-%h1 Listing incoming_receipts
+%h3
+  Delivery Receipts
 
-%table
+%table.table.table-hover.table-responsive.receipt#deliveries
   %thead
     %tr
       %th Receipt number
@@ -11,9 +12,7 @@
       %th Amount received
       %th Balance
       %th
-      %th
-      %th
-      
+
   %tbody
     - @incoming_receipts.each do |incoming_receipt|
       %tr
@@ -25,8 +24,8 @@
         %td= incoming_receipt.amount_received
         %td= incoming_receipt.balance
         %td= link_to 'Show', incoming_receipt
-        %td= link_to 'Edit', edit_incoming_receipt_path(incoming_receipt)
-        %td= link_to 'Destroy', incoming_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        /%td= link_to 'Edit', edit_incoming_receipt_path(incoming_receipt)
+        /%td= link_to 'Destroy', incoming_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 

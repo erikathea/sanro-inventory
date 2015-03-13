@@ -1,5 +1,17 @@
+%h3
+  Delivery Receipt from #{@incoming_receipt.supplier} no. #{@incoming_receipt.receipt_number}
+  %small
+    = link_to 'Edit', edit_incoming_receipt_path(@incoming_receipt), class: 'glyphicon glyphicon-pencil btn btn-link btn-xs'
+  %small
+    = link_to 'Destroy', @incoming_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'glyphicon glyphicon-trash btn btn-link btn-xs'
+  %small
+    = link_to 'Back', items_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
+
 %p#notice= notice
 
+%p
+  %b Date issued:
+  = @incoming_receipt.date_issued
 %p
   %b Receipt number:
   = @incoming_receipt.receipt_number
@@ -9,11 +21,8 @@
 %p
   %b Address:
   = @incoming_receipt.address
-%p
-  %b Date issued:
-  = @incoming_receipt.date_issued
-%p
-  %b Total:
+%h4
+  Total:
   = @incoming_receipt.total
 %p
   %b Amount received:
@@ -22,6 +31,4 @@
   %b Balance:
   = @incoming_receipt.balance
 
-= link_to 'Edit', edit_incoming_receipt_path(@incoming_receipt)
-\|
-= link_to 'Back', incoming_receipts_path
+= render 'incoming_receipt_details/list', incoming_receipt_details: @incoming_receipt.incoming_receipt_details

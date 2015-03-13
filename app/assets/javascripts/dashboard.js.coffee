@@ -13,7 +13,19 @@ ready  = ->
         pagingType: 'simple_numbers'
         dom: '<"top"lf>rt<"bottom"ip><"clear">'
 
-  $('.receipt_date_issued').datepicker()
+  if !$.fn.dataTable.isDataTable( ".receipt" )
+    $('.receipt').DataTable
+        sPaginationType: 'full_numbers'
+        bJQueryUI: true
+        'order': [[0, 'asc']]
+        lengthMenu: [[10, 25, -1], [10, 25, "All"]]
+        pageLength: 10
+        pagingType: 'simple_numbers'
+        dom: '<"top"lf>rt<"bottom"ip><"clear">'
+
+  $('.receipt_date_issued').datepicker(
+     dateFormat: "dd/mm/yy"
+  )
 
   ### user input must be uppercase ###
   $('input').on('keyup', (e) ->
@@ -48,9 +60,11 @@ ready  = ->
     )
 
     ### user input must be uppercase ###
-    $('input').on('keyup', (e) ->
-      this.value = this.value.toUpperCase()
-      return
+    $(detail.find('input')).each( (index, element) ->
+      $(element).on('keyup', (e) ->
+        this.value = this.value.toUpperCase()
+        return
+      )
     )
     return
   )

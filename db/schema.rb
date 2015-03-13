@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308143408) do
+ActiveRecord::Schema.define(version: 20150313123409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,12 +44,14 @@ ActiveRecord::Schema.define(version: 20150308143408) do
 
   create_table "inventories", force: true do |t|
     t.integer  "item_id"
-    t.decimal  "unit_price",    precision: 15, scale: 2
+    t.decimal  "unit_price",          precision: 15, scale: 2
     t.float    "current_stock"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "incoming_receipt_id"
   end
 
+  add_index "inventories", ["incoming_receipt_id"], name: "index_inventories_on_incoming_receipt_id", using: :btree
   add_index "inventories", ["item_id"], name: "index_inventories_on_item_id", using: :btree
 
   create_table "items", force: true do |t|
