@@ -1,0 +1,19 @@
+%table.table.table-hover.table-responsive.receipt#incoming
+  %thead
+    %tr
+      %th Description
+      %th Part number
+      %th Qty
+      %th Unit
+      %th Unit price
+      %th Total
+
+  %tbody
+    - incoming_receipt_details.each do |incoming_receipt_detail|
+      %tr
+        %td= incoming_receipt_detail.description
+        %td= incoming_receipt_detail.part_number
+        %td= incoming_receipt_detail.qty
+        %td= incoming_receipt_detail.unit
+        %td= incoming_receipt_detail.unit_price
+        %td= incoming_receipt_detail.total
