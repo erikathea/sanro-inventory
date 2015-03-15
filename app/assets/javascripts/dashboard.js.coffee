@@ -78,7 +78,7 @@ ready  = ->
         highlight: true
         hint: true
         source: data
-        allowNew: false
+        allowNew: true
       return
 
     $part_number = $(detail.find('div.part-number input'))
@@ -92,10 +92,23 @@ ready  = ->
           highlight: true
           hint: true
           source: data
-          allowNew: false
+          allowNew: true
         return
       return
     )
+
+    ### typeahead js ###
+    $.getJSON '/items/ajaxList', (data) ->
+      tag_input = $(detail.find('.select-inventory-item'))
+      tag_input.typeahead
+        placeholder: tag_input.attr('placeholder')
+        displayKey: 'value'
+        highlight: true
+        hint: true
+        source: data
+        allowNew: false
+      return
+
     return
   )
 
@@ -153,7 +166,7 @@ ready  = ->
       highlight: true
       hint: true
       source: data
-      allowNew: false
+      allowNew: true
     return
 
   $part_number = $('.new_receipt .nested-fields div.part-number input')
@@ -167,7 +180,7 @@ ready  = ->
         highlight: true
         hint: true
         source: data
-        allowNew: false
+        allowNew: true
       return
     return
   )

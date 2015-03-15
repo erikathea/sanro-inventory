@@ -11,6 +11,10 @@ class Item < ActiveRecord::Base
     self.inventories.map(&:current_stock).inject{|sum, x| sum + x}
   end
 
+  def full_description
+    "#{description} - #{part_number}" if self.description.present? && self.part_number.present?
+  end
+
   private
   def item_already_exists?
     if(Item.find_by_description_and_part_number(self.description, self.part_number))

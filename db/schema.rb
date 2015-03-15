@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150313123409) do
+ActiveRecord::Schema.define(version: 20150315191720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,10 +49,12 @@ ActiveRecord::Schema.define(version: 20150313123409) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "incoming_receipt_id"
+    t.integer  "outgoing_receipt_id"
   end
 
   add_index "inventories", ["incoming_receipt_id"], name: "index_inventories_on_incoming_receipt_id", using: :btree
   add_index "inventories", ["item_id"], name: "index_inventories_on_item_id", using: :btree
+  add_index "inventories", ["outgoing_receipt_id"], name: "index_inventories_on_outgoing_receipt_id", using: :btree
 
   create_table "items", force: true do |t|
     t.string   "description"
@@ -64,7 +66,7 @@ ActiveRecord::Schema.define(version: 20150313123409) do
 
   create_table "outgoing_receipt_details", force: true do |t|
     t.integer  "outgoing_receipt_id"
-    t.integer  "inventory_id"
+    t.integer  "item_id"
     t.decimal  "total",                         precision: 15, scale: 2
     t.float    "qty"
     t.string   "unit",                limit: 5
@@ -73,7 +75,7 @@ ActiveRecord::Schema.define(version: 20150313123409) do
     t.decimal  "selling_price",                 precision: 15, scale: 2
   end
 
-  add_index "outgoing_receipt_details", ["inventory_id"], name: "index_outgoing_receipt_details_on_inventory_id", using: :btree
+  add_index "outgoing_receipt_details", ["item_id"], name: "index_outgoing_receipt_details_on_item_id", using: :btree
   add_index "outgoing_receipt_details", ["outgoing_receipt_id"], name: "index_outgoing_receipt_details_on_outgoing_receipt_id", using: :btree
 
   create_table "outgoing_receipts", force: true do |t|

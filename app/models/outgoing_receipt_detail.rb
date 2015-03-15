@@ -1,6 +1,6 @@
 class OutgoingReceiptDetail < ActiveRecord::Base
   belongs_to :outgoing_receipt
-  belongs_to :inventory
+  belongs_to :item
 
   validates :selling_price, presence: true
   validates :qty, presence: true
@@ -9,7 +9,7 @@ class OutgoingReceiptDetail < ActiveRecord::Base
   private
   def inventory_exists?
     if !self.inventory.present?
-      errors.add(:inventory, ': Wrong inventory number')
+      errors.add(:inventory, ': Wrong inventory item')
     end
   end
 end

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     collection do
       get 'descriptions'
       get 'part_numbers'
+      get 'ajaxList'
     end
   end
 
