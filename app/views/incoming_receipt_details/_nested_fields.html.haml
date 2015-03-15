@@ -3,13 +3,13 @@
     %tbody
       %tr
         %td
-          .field.form-group
+          .field.form-group.description
             = f.label :description
-            = f.text_field :description, class: 'form-control'
+            = f.text_field :description, class: 'form-control', placeholder: 'DESCRIPTION'
         %td
-          .field.form-group
+          .field.form-group.part-number
             = f.label :part_number
-            = f.text_field :part_number, class: 'form-control'
+            = f.text_field :part_number, class: 'form-control', placeholder: 'PART NO'
         %td.width-10
           .field.form-group.qty
             = f.label :qty

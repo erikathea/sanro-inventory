@@ -36,6 +36,20 @@ class ItemsController < ApplicationController
     respond_with(@item)
   end
 
+  def descriptions
+    respond_to do |format|
+      format.html
+      format.json{ render json: Item.pluck(:description).uniq}
+    end
+  end
+
+  def part_numbers
+    respond_to do |format|
+      format.html
+      format.json{ render json: Item.where(description: params[:description].upcase).pluck(:part_number).uniq}
+    end
+  end
+
   private
     def set_item
       @item = Item.find(params[:id])

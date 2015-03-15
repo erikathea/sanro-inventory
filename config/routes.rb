@@ -12,7 +12,12 @@ Rails.application.routes.draw do
 
   resources :inventories
 
-  resources :items
+  resources :items do
+    collection do
+      get 'descriptions'
+      get 'part_numbers'
+    end
+  end
 
   devise_for :users
 
