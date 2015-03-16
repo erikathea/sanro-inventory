@@ -23,6 +23,7 @@ ready  = ->
         pagingType: 'simple_numbers'
         dom: '<"top"lf>rt<"bottom"ip><"clear">'
 
+  ### datepicker - add/update receipt form ###
   $('.receipt_date_issued').datepicker(
      dateFormat: "dd/mm/yy"
   )
@@ -33,8 +34,9 @@ ready  = ->
     return
   )
 
-  ### calculate receipt_detail total ###
+  ### cocoon nested forms ###
   $('.new_receipt').on('cocoon:before-insert', (e, detail) ->
+    ### calculate receipt_detail total ###
     $qty_input = $(detail.find('div.qty input'))
     $qty_input.on('focusout', ->
       $row = $(this).parent().parent().parent()
@@ -66,6 +68,47 @@ ready  = ->
         return
       )
     )
+
+    ### typeahead js ###
+    $.getJSON '/items/descriptions', (data) ->
+      tag_input = $(detail.find('div.description input'))
+      tag_input.typeahead
+        placeholder: tag_input.attr('placeholder')
+        displayKey: 'value'
+        highlight: true
+        hint: true
+        source: data
+        allowNew: true
+      return
+
+    $part_number = $(detail.find('div.part-number input'))
+    $part_number.on('focusin', ->
+      ### typeahead js ###
+      description = $(detail.find('div.description input')).val()
+      $.getJSON '/items/part_numbers', {description:description}, (data) ->
+        $part_number.typeahead
+          placeholder: $part_number.attr('placeholder')
+          displayKey: 'value'
+          highlight: true
+          hint: true
+          source: data
+          allowNew: true
+        return
+      return
+    )
+
+    ### typeahead js ###
+    $.getJSON '/items/ajaxList', (data) ->
+      tag_input = $(detail.find('.select-inventory-item'))
+      tag_input.typeahead
+        placeholder: tag_input.attr('placeholder')
+        displayKey: 'value'
+        highlight: true
+        hint: true
+        source: data
+        allowNew: false
+      return
+
     return
   )
 
@@ -114,6 +157,33 @@ ready  = ->
     return
   )
 
+  ### typeahead js ###
+  $.getJSON '/items/descriptions', (data) ->
+    tag_input = $('.new_receipt .nested-fields div.description input')
+    tag_input.typeahead
+      placeholder: tag_input.attr('placeholder')
+      displayKey: 'value'
+      highlight: true
+      hint: true
+      source: data
+      allowNew: true
+    return
+
+  $part_number = $('.new_receipt .nested-fields div.part-number input')
+  $part_number.on('focusin', ->
+    ### typeahead js ###
+    description = $('.new_receipt .nested-fields div.description input').val()
+    $.getJSON '/items/part_numbers', {description:description}, (data) ->
+      $part_number.typeahead
+        placeholder: $part_number.attr('placeholder')
+        displayKey: 'value'
+        highlight: true
+        hint: true
+        source: data
+        allowNew: true
+      return
+    return
+  )
   return
 
 $(document).ready(ready)

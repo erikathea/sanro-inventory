@@ -36,6 +36,30 @@ class ItemsController < ApplicationController
     respond_with(@item)
   end
 
+  def descriptions
+    respond_to do |format|
+      format.html
+      format.json{ render json: Item.pluck(:description).uniq }
+    end
+  end
+
+  def part_numbers
+    respond_to do |format|
+      format.html
+      format.json{ render json: Item.where(description: params[:description].upcase).pluck(:part_number).uniq }
+    end
+  end
+
+  def ajaxList
+    ajaxList = []
+    Item.pluck(:description, :part_number).uniq.each do |item|
+      ajaxList << "#{item.first} - #{item.last}"
+    end
+    respond_to do |format|
+      format.html
+      format.json{ render json: ajaxList }
+    end
+  end
   private
     def set_item
       @item = Item.find(params[:id])

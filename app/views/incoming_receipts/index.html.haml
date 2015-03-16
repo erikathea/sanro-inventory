@@ -11,19 +11,18 @@
       %th Total
       %th Amount received
       %th Balance
-      %th
 
   %tbody
     - @incoming_receipts.each do |incoming_receipt|
       %tr
-        %td= incoming_receipt.receipt_number
+        %td= link_to incoming_receipt.receipt_number, incoming_receipt
         %td= incoming_receipt.supplier
         %td= incoming_receipt.address
         %td= incoming_receipt.date_issued
         %td= incoming_receipt.total
         %td= incoming_receipt.amount_received
         %td= incoming_receipt.balance
-        %td= link_to 'Show', incoming_receipt
+        /%td= link_to 'Show', incoming_receipt
         /%td= link_to 'Edit', edit_incoming_receipt_path(incoming_receipt)
         /%td= link_to 'Destroy', incoming_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }
 

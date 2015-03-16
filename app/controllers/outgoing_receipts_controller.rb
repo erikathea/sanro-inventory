@@ -71,7 +71,7 @@ class OutgoingReceiptsController < ApplicationController
           :qty,
           :unit,
           :selling_price,
-          :inventory_id
+          :item_id
         ]
       )
     end
