@@ -52,8 +52,8 @@ class ItemsController < ApplicationController
 
   def ajaxList
     ajaxList = []
-    Item.pluck(:description, :part_number).uniq.each do |item|
-      ajaxList << "#{item.first} - #{item.last}"
+    Item.all.each do |item|
+      ajaxList << "#{item.description} - #{item.part_number} - #{item.id}"
     end
     respond_to do |format|
       format.html

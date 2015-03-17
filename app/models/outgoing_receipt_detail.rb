@@ -4,12 +4,16 @@ class OutgoingReceiptDetail < ActiveRecord::Base
 
   validates :selling_price, presence: true
   validates :qty, presence: true
-  validate :inventory_exists?
+
+  after_save :update_inventory
 
   private
-  def inventory_exists?
-    if !self.inventory.present?
-      errors.add(:inventory, ': Wrong inventory item')
-    end
+  def update_inventory
+    inventory = Inventory.new(
+      item: item,
+      current_stock: -(self.qty),
+      outgoing_receipt: self.outgoing_receipt
+    )
+    inventory.save
   end
 end

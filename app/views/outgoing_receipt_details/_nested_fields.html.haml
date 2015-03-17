@@ -6,7 +6,7 @@
           .field.form-group.inventory-id.inventory-item
             = f.label 'Inventory Item'
             = f.text_field :item, value: f.object.item.full_description, class: 'form-control select-inventory-item', placeholder: 'Select inventory item'
-            = f.hidden_field :item_id
+            = f.hidden_field :item_id, class: 'hidden-item-id'
         %td.width-15
           .field.form-group.qty
             = f.label :qty
