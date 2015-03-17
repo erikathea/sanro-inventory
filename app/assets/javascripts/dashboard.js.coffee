@@ -39,7 +39,7 @@ ready  = ->
     ### calculate receipt_detail total ###
     $qty_input = $(detail.find('div.qty input'))
     $qty_input.on('focusout', ->
-      $row = $(this).parent().parent().parent()
+      $row = $(this).parents().closest('tr')
       $total = $row.find('div.total input')[0]
 
       qty = parseFloat(this.value)
@@ -51,7 +51,7 @@ ready  = ->
 
     $unit_price_input = $(detail.find('div.price input'))
     $unit_price_input.on('focusout', ->
-      $row = $(this).parent().parent().parent()
+      $row = $(this).parents().closest('tr')
       $total = $row.find('div.total input')[0]
 
       qty = parseFloat($row.find('div.qty input')[0].value)
@@ -106,6 +106,10 @@ ready  = ->
         highlight: true
         hint: true
         source: data
+        updater: (item) ->
+          el_item = this.$element.parent().find('.hidden-item-id')[0]
+          el_item.value = item.split(' - ')[2]
+          return item
         allowNew: false
       return
 
@@ -113,7 +117,7 @@ ready  = ->
   )
 
   $('.new_receipt .nested-fields div.qty input').on('change', (e, detail) ->
-    $row = $(this).parent().parent().parent()
+    $row = $(this).parents().closest('tr')
     $total = $row.find('div.total input')[0]
 
     qty = parseFloat(this.value)
@@ -124,7 +128,7 @@ ready  = ->
   )
 
   $('.new_receipt .nested-fields div.price input').on('change', (e, detail) ->
-    $row = $(this).parent().parent().parent()
+    $row = $(this).parents().closest('tr')
     $total = $row.find('div.total input')[0]
 
     qty = parseFloat($row.find('div.qty input')[0].value)
@@ -184,6 +188,22 @@ ready  = ->
       return
     return
   )
+
+  ### typeahead js ###
+  $.getJSON '/items/ajaxList', (data) ->
+    tag_input = $('.new_receipt .nested-fields .select-inventory-item')
+    tag_input.typeahead
+      placeholder: tag_input.attr('placeholder')
+      displayKey: 'value'
+      highlight: true
+      hint: true
+      source: data
+      updater: (item) ->
+        el_item = this.$element.parent().find('.hidden-item-id')[0]
+        el_item.value = item.split(' - ')[2]
+        return item
+      allowNew: false
+    return
   return
 
 $(document).ready(ready)
