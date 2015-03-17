@@ -15,13 +15,13 @@
         %td
           - if inventory.incoming_receipt.present?
             = link_to inventory.incoming_receipt.receipt_number, incoming_receipt_path(inventory.incoming_receipt)
-          - else
+          - if inventory.outgoing_receipt.present?
             = link_to inventory.outgoing_receipt.receipt_number, outgoing_receipt_path(inventory.outgoing_receipt)
         %td #{inventory.item.description} - #{inventory.item.part_number}
         %td= inventory.unit_price
         %td
           - if inventory.incoming_receipt.present?
             = inventory.item.selling_price
-          - else
+          - if inventory.outgoing_receipt.present?
             = inventory.outgoing_receipt.id
         %td= inventory.current_stock
