@@ -1,7 +1,6 @@
 #!/bin/bash
 
-cd ~/sanro-inventory
-bundle install
-rake db:migrate
-rails s
-exit 0
+cd /home/sanro/sanro-inventory
+pwd
+echo $PATH
+rvm use 2.1.3
