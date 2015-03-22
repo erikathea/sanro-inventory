@@ -17,7 +17,8 @@ class Item < ActiveRecord::Base
 
   private
   def item_already_exists?
-    if(Item.find_by_description_and_part_number(self.description, self.part_number))
+    item = Item.find_by_description_and_part_number(self.description, self.part_number)
+    if (item && item.id != self.id)
       errors.add(:description, 'already exists')
       errors.add(:part_number, 'already exists')
     end
