@@ -1,16 +1,22 @@
 class OutgoingReceiptsController < ApplicationController
   before_action :set_outgoing_receipt, only: [:show, :edit, :update, :destroy]
-
   respond_to :html
 
   def index
-    if params[:type]
-      @outgoing_receipts = OutgoingReceipt.where(sale_type: params[:type])
-      @type = (params[:type] == '0')? 'Sales Invoices (SI)' : 'Delivery Receipts (DR)'
-    else
-      @outgoing_receipts = OutgoingReceipt.all
-    end
+    @outgoing_receipts = OutgoingReceipt.all
     respond_with(@outgoing_receipts)
+  end
+
+  def sales_invoices
+    @outgoing_receipts = OutgoingReceipt.where(sale_type: 0)
+    @type = 'Sales Invoices (SI)'
+    render 'index'
+  end
+
+  def deliveries
+    @outgoing_receipts = OutgoingReceipt.where(sale_type: 1)
+    @type = 'Delivery Receipts (DR)'
+    render 'index'
   end
 
   def show
@@ -56,7 +62,7 @@ class OutgoingReceiptsController < ApplicationController
 
   private
     def set_outgoing_receipt
-      @outgoing_receipt = OutgoingReceipt.find(params[:id])
+      @outgoing_receipt = OutgoingReceipt.includes(:outgoing_receipt_details).find(params[:id])
       @outgoing_receipt.date_issued = @outgoing_receipt.date_issued.strftime("%d/%m/%Y")
       authorize @outgoing_receipt
     end

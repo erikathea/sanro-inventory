@@ -4,7 +4,7 @@ class IncomingReceiptsController < ApplicationController
   respond_to :html
 
   def index
-    @incoming_receipts = IncomingReceipt.all
+    @incoming_receipts = IncomingReceipt.includes(:incoming_receipt_details).all
     respond_with(@incoming_receipts)
   end
 

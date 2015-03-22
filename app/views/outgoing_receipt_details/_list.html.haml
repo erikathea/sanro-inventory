@@ -1,0 +1,19 @@
+%table.table.table-hover.table-responsive.receipt#outgoing
+  %thead
+    %tr
+      %th Description
+      %th Part number
+      %th Qty
+      %th Unit
+      %th Selling price
+      %th Total
+
+  %tbody
+    - outgoing_receipt_details.each do |outgoing_receipt_detail|
+      %tr
+        %td= link_to outgoing_receipt_detail.item.description, item_path(outgoing_receipt_detail.item)
+        %td= outgoing_receipt_detail.item.part_number
+        %td= outgoing_receipt_detail.qty
+        %td= outgoing_receipt_detail.unit
+        %td= outgoing_receipt_detail.selling_price
+        %td= outgoing_receipt_detail.total

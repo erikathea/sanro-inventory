@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :outgoing_receipts do
     get 'add_si', on: :new
     get 'add_dr', on: :new
+    get 'sales_invoices', on: :collection
+    get 'deliveries', on: :collection
   end
 
   resources :incoming_receipts

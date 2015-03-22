@@ -1,5 +1,6 @@
 class IncomingReceiptDetail < ActiveRecord::Base
   belongs_to :incoming_receipt
+  # TODO: belongs_to :item
 
   validates :description, presence: :true
   validates :part_number, presence: :true

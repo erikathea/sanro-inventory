@@ -5,9 +5,20 @@
   %small
     = link_to 'Destroy', @incoming_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'glyphicon glyphicon-trash btn btn-link btn-xs'
   %small
-    = link_to 'Back', items_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
+    = link_to 'Back to Deliveries', incoming_receipts_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
 
 %p#notice= notice
+
+.pull-right
+  %h4
+    Total:
+    = @incoming_receipt.total
+  %p
+    %b Amount received:
+    = @incoming_receipt.amount_received
+  %p
+    %b Balance:
+    = @incoming_receipt.balance
 
 %p
   %b Date issued:
@@ -21,14 +32,7 @@
 %p
   %b Address:
   = @incoming_receipt.address
-%h4
-  Total:
-  = @incoming_receipt.total
-%p
-  %b Amount received:
-  = @incoming_receipt.amount_received
-%p
-  %b Balance:
-  = @incoming_receipt.balance
+
+%br
 
 = render 'incoming_receipt_details/list', incoming_receipt_details: @incoming_receipt.incoming_receipt_details

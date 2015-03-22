@@ -1,5 +1,5 @@
 %h3
-  Inventory Item #{@item.id}
+  #{@item.full_description}
   %small
     = link_to 'Edit', edit_item_path(@item), class: 'glyphicon glyphicon-pencil btn btn-link btn-xs'
   %small
@@ -9,17 +9,20 @@
 
 %p#notice= notice
 
+.pull-right
+  %h4
+    Total Stock:
+    = @item.total_stock
+
+  %p
+    %b SRP:
+    = @item.selling_price
+
 %p
   %b Description:
   = @item.description
 %p
   %b Part number:
   = @item.part_number
-%p
-  %b SRP:
-  = @item.selling_price
-
-%h4
-  Total Stock:
-  = @item.total_stock
+%br
 = render 'inventories/list', inventories: @item.inventories
