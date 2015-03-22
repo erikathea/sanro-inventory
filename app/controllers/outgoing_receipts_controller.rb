@@ -6,7 +6,7 @@ class OutgoingReceiptsController < ApplicationController
   def index
     if params[:type]
       @outgoing_receipts = OutgoingReceipt.where(sale_type: params[:type])
-      @type = (params[:type] == 0)? 'Sales Invoices (SI)' : 'Delivery Receipts (DR)'
+      @type = (params[:type] == '0')? 'Sales Invoices (SI)' : 'Delivery Receipts (DR)'
     else
       @outgoing_receipts = OutgoingReceipt.all
     end
