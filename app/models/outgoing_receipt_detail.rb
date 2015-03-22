@@ -4,10 +4,15 @@ class OutgoingReceiptDetail < ActiveRecord::Base
 
   validates :selling_price, presence: true
   validates :qty, presence: true
+  validate :has_item?
 
   after_save :update_inventory
 
   private
+  def has_item?
+    errors.add(:item, 'not found') if !self.item.present?
+  end
+
   def update_inventory
     inventory = Inventory.new(
       item: item,

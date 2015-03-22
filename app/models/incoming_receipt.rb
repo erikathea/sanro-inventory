@@ -13,13 +13,11 @@ class IncomingReceipt < ActiveRecord::Base
 
   private
   def has_one_receipt_detail?
-    if self.incoming_receipt_details.empty?
-      errors.add(:incoming_receipt_details, ': Please add at least one receipt item')
-    end
+    errors.add(:incoming_receipt_details, ': Please add at least one receipt item') if self.incoming_receipt_details.empty?
   end
 
   def check_supplier_receipt_number?
-    if(IncomingReceipt.find_by_receipt_number_and_supplier(self.receipt_number, self.supplier))
+    if (IncomingReceipt.find_by_receipt_number_and_supplier(self.receipt_number, self.supplier))
       errors.add(:receipt_number, 'already exists')
     end
   end
