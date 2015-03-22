@@ -13,6 +13,7 @@ class IncomingReceiptsController < ApplicationController
   end
 
   def new
+    authorize IncomingReceipt
     @incoming_receipt = IncomingReceipt.new
     respond_with(@incoming_receipt)
   end
@@ -40,6 +41,7 @@ class IncomingReceiptsController < ApplicationController
     def set_incoming_receipt
       @incoming_receipt = IncomingReceipt.find(params[:id])
       @incoming_receipt.date_issued = @incoming_receipt.date_issued.strftime("%d/%m/%Y")
+      authorize @incoming_receipt
     end
 
     def incoming_receipt_params

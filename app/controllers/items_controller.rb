@@ -13,6 +13,7 @@ class ItemsController < ApplicationController
   end
 
   def new
+    authorize Item
     @item = Item.new
     respond_with(@item)
   end
@@ -63,6 +64,7 @@ class ItemsController < ApplicationController
   private
     def set_item
       @item = Item.find(params[:id])
+      authorize @item
     end
 
     def item_params
