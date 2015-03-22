@@ -4,7 +4,12 @@ class OutgoingReceiptsController < ApplicationController
   respond_to :html
 
   def index
-    @outgoing_receipts = OutgoingReceipt.all
+    if params[:type]
+      @outgoing_receipts = OutgoingReceipt.where(sale_type: params[:type])
+      @type = (params[:type] == 0)? 'Sales Invoices (SI)' : 'Delivery Receipts (DR)'
+    else
+      @outgoing_receipts = OutgoingReceipt.all
+    end
     respond_with(@outgoing_receipts)
   end
 

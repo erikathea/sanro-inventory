@@ -1,6 +1,10 @@
-%h1 Listing outgoing_receipts
+%h3
+  - if @type
+    = @type
+  - else
+    Outgoing Receipts
 
-%table
+%table.table.table-hover.table-responsive.receipt#outgoing-receipts
   %thead
     %tr
       %th Receipt number
@@ -8,28 +12,26 @@
       %th Address
       %th Date issued
       %th Total
-      %th Amount received
+      /%th Amount received
       %th Balance
-      %th Type
-      %th
-      %th
-      %th
+      - if !@type
+        %th Type
+      /%th
+      /%th
+      /%th
 
   %tbody
     - @outgoing_receipts.each do |outgoing_receipt|
       %tr
-        %td= outgoing_receipt.receipt_number
+        %td= link_to outgoing_receipt.receipt_number, outgoing_receipt
         %td= outgoing_receipt.client
         %td= outgoing_receipt.address
         %td= outgoing_receipt.date_issued
         %td= outgoing_receipt.total
-        %td= outgoing_receipt.amount_received
+        /%td= outgoing_receipt.amount_received
         %td= outgoing_receipt.balance
-        %td= outgoing_receipt.sale_type
-        %td= link_to 'Show', outgoing_receipt
-        %td= link_to 'Edit', edit_outgoing_receipt_path(outgoing_receipt)
-        %td= link_to 'Destroy', outgoing_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Outgoing receipt', new_outgoing_receipt_path
+        - if !@type
+          %td= outgoing_receipt.type_title
+        /%td= link_to 'Show', outgoing_receipt
+        /%td= link_to 'Edit', edit_outgoing_receipt_path(outgoing_receipt)
+        /%td= link_to 'Destroy', outgoing_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }

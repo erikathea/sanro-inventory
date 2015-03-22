@@ -21,11 +21,15 @@
           %span.caret
         %ul.dropdown-menu{:role => "menu"}
           %li{:role => 'presentation'}
-            = link_to 'Deliveries', incoming_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
+            = link_to ' Deliveries', incoming_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
           %li{:role => 'presentation'}
             = link_to 'Add Delivery', new_incoming_receipt_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
           %li{:role => 'presentation'}
+            = link_to ' DRs', outgoing_receipts_path(type: 1), class: 'glyphicon glyphicon-list btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
+          %li{:role => 'presentation'}
             = link_to 'Add DR', add_dr_new_outgoing_receipt_path,   class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
+          %li{:role => 'presentation'}
+            = link_to ' SIs', outgoing_receipts_path(type: 0), class: 'glyphicon glyphicon-list btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
           %li{:role => 'presentation'}
             = link_to 'Add SI', add_si_new_outgoing_receipt_path,  class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
 
