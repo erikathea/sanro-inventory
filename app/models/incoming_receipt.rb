@@ -17,7 +17,8 @@ class IncomingReceipt < ActiveRecord::Base
   end
 
   def check_supplier_receipt_number?
-    if (IncomingReceipt.find_by_receipt_number_and_supplier(self.receipt_number, self.supplier))
+    receipt = IncomingReceipt.find_by_receipt_number_and_supplier(self.receipt_number, self.supplier)
+    if (receipt && receipt.id != self.id)
       errors.add(:receipt_number, 'already exists')
     end
   end
