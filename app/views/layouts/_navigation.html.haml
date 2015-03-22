@@ -12,7 +12,7 @@
       = render 'layouts/navigation_links'
 %nav.navbar-default
   - if user_signed_in?
-    %ul.nav.nav-tabs#sub_nav
+    %ul.nav.nav-tabs#sub_nav.collapse.navbar-collapse
       /%li= link_to 'Inventory List', inventories_path, class: 'glyphicon glyphicon-tasks btn btn-link btn-xs'
       %li.dropdown
         %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
@@ -23,15 +23,31 @@
           %li{:role => 'presentation'}
             = link_to ' Deliveries', incoming_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
           %li{:role => 'presentation'}
-            = link_to 'Add Delivery', new_incoming_receipt_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
+            = link_to ' Add Delivery', new_incoming_receipt_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
           %li{:role => 'presentation'}
             = link_to ' DRs', outgoing_receipts_path(type: 1), class: 'glyphicon glyphicon-list btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
           %li{:role => 'presentation'}
-            = link_to 'Add DR', add_dr_new_outgoing_receipt_path,   class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
+            = link_to ' Add DR', add_dr_new_outgoing_receipt_path,   class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
           %li{:role => 'presentation'}
             = link_to ' SIs', outgoing_receipts_path(type: 0), class: 'glyphicon glyphicon-list btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
           %li{:role => 'presentation'}
-            = link_to 'Add SI', add_si_new_outgoing_receipt_path,  class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
+            = link_to ' Add SI', add_si_new_outgoing_receipt_path,  class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
 
-      %li= link_to 'Manage Items', items_path, class: 'glyphicon glyphicon-briefcase btn btn-link btn-xs'
-      %li= link_to 'Add Inventory Item', new_item_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs'
+      %li.dropdown
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+          %span.glyphicon.glyphicon-briefcase
+            Inventory
+          %span.caret
+        %ul.dropdown-menu{:role => "menu"}
+          %li{:role => 'presentation'}
+            = link_to ' Inventory Items', items_path, class: 'glyphicon glyphicon-tag btn btn-link btn-xs pull-left'
+          %li{:role => 'presentation'}
+            = link_to ' New Inventory Item', new_item_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left'
+
+      %li.dropdown
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+          %span.glyphicon.glyphicon-book
+            Reports
+          %span.caret
+        %ul.dropdown-menu{:role => "menu"}
+          %li{:role => 'presentation'}
