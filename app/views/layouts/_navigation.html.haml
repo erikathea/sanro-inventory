@@ -45,9 +45,4 @@
             = link_to ' New Inventory Item', new_item_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left'
 
       %li.dropdown
-        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-          %span.glyphicon.glyphicon-book
-            Reports
-          %span.caret
-        %ul.dropdown-menu{:role => "menu"}
-          %li{:role => 'presentation'}
+        = link_to ' Reports', generate_report_path, class: 'glyphicon glyphicon-book btn btn-link btn-xs pull-left'

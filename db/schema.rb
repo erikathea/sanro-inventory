@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150322151434) do
+ActiveRecord::Schema.define(version: 20150323193141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150322151434) do
     t.datetime "updated_at"
     t.integer  "incoming_receipt_id"
     t.integer  "outgoing_receipt_id"
+    t.float    "initial_stock"
   end
 
   add_index "inventories", ["incoming_receipt_id"], name: "index_inventories_on_incoming_receipt_id", using: :btree

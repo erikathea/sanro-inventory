@@ -13,7 +13,11 @@
       %tr
         %td= link_to outgoing_receipt_detail.item.description, item_path(outgoing_receipt_detail.item)
         %td= outgoing_receipt_detail.item.part_number
-        %td= outgoing_receipt_detail.qty
+        %td= number_with_precision(outgoing_receipt_detail.qty, precision: 2)
         %td= outgoing_receipt_detail.unit
-        %td= outgoing_receipt_detail.selling_price
-        %td= outgoing_receipt_detail.total
+        %td
+          .pull-right
+            %b= number_with_precision(outgoing_receipt_detail.selling_price, precision:2)
+        %td
+          .pull-right.text-success
+            %b= number_with_precision(outgoing_receipt_detail.total, precision:2)

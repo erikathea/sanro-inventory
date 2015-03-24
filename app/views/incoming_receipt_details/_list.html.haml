@@ -13,7 +13,11 @@
       %tr
         %td= incoming_receipt_detail.description
         %td= incoming_receipt_detail.part_number
-        %td= incoming_receipt_detail.qty
+        %td= number_with_precision(incoming_receipt_detail.qty, precision:2)
         %td= incoming_receipt_detail.unit
-        %td= incoming_receipt_detail.unit_price
-        %td= incoming_receipt_detail.total
+        %td
+          .pull-right
+            %b= number_with_precision(incoming_receipt_detail.unit_price, precision:2)
+        %td
+          .pull-right.text-success
+            %b= number_with_precision(incoming_receipt_detail.total, precision:2)

@@ -1,11 +1,14 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-
+  helper InventoriesHelper
   respond_to :html
 
   def index
     @items = Item.includes(:inventories).all
     respond_with(@items)
+  end
+
+  def generate_report
   end
 
   def show
@@ -54,7 +57,7 @@ class ItemsController < ApplicationController
   def ajaxList
     ajaxList = []
     Item.all.each do |item|
-      ajaxList << "#{item.description} - #{item.part_number} - #{item.id}"
+      ajaxList << "#{item.description} #{item.part_number} |#{item.id}"
     end
     respond_to do |format|
       format.html

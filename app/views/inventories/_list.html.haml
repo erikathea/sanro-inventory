@@ -7,6 +7,7 @@
       %th Unit Price
       %th Selling Price
       %th Current Stock
+      %th Initial Stock
 
   %tbody
     - inventories.each do |inventory|
@@ -18,10 +19,20 @@
             = link_to inventory.incoming_receipt.receipt_number, incoming_receipt_path(inventory.incoming_receipt)
           - if inventory.outgoing_receipt.present?
             = link_to inventory.outgoing_receipt.receipt_number, outgoing_receipt_path(inventory.outgoing_receipt)
-        %td= inventory.unit_price
         %td
-          - if inventory.incoming_receipt.present?
-            = inventory.item.selling_price
-          - if inventory.outgoing_receipt.present?
-            = inventory.outgoing_receipt.outgoing_receipt_details.where(item: inventory.item).first.selling_price
-        %td= inventory.current_stock
+          .pull-right
+            - if !inventory.outgoing_receipt
+              %b.text-info= number_with_precision(inventory.unit_price, precision:2)
+            - else
+              = number_with_precision(inventory.unit_price, precision:2)
+        %td
+          .pull-right
+            - if inventory.incoming_receipt.present?
+              = number_with_precision(inventory.item.selling_price, precision:2)
+            - if inventory.outgoing_receipt.present?
+              %b.text-info= number_with_precision(inventory.outgoing_receipt.outgoing_receipt_details.where(item: inventory.item).first.selling_price, precision:2)
+        %td
+          .pull-right
+            %b= style_stock(inventory.current_stock)
+        %td
+          .pull-right= number_with_precision(inventory.initial_stock, precision:2)

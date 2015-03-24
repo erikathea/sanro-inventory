@@ -5,18 +5,18 @@
   %small
     = link_to 'Destroy', @item, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'glyphicon glyphicon-trash btn btn-link btn-xs'
   %small
-    = link_to 'Back', items_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
+    = link_to 'Back to Inventory Items', items_path, class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
 
 %p#notice= notice
 
 .pull-right
   %h4
     Total Stock:
-    = @item.total_stock
+    = number_with_precision(@item.total_stock, precision:2)
 
   %p
     %b SRP:
-    = @item.selling_price
+    = number_with_precision(@item.selling_price, precision:2)
 
 %p
   %b Description:

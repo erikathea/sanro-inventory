@@ -8,6 +8,9 @@ class IncomingReceiptsController < ApplicationController
     respond_with(@incoming_receipts)
   end
 
+  def generate_report
+  end
+
   def show
     respond_with(@incoming_receipt)
   end

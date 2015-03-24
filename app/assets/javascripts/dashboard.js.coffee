@@ -108,7 +108,7 @@ ready  = ->
         source: data
         updater: (item) ->
           el_item = this.$element.parent().find('.hidden-item-id')[0]
-          el_item.value = item.split(' - ')[2]
+          el_item.value = item.split('|')[1]
           return item
         allowNew: false
       return

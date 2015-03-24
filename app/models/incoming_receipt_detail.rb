@@ -1,6 +1,5 @@
 class IncomingReceiptDetail < ActiveRecord::Base
   belongs_to :incoming_receipt
-  # TODO: belongs_to :item
 
   validates :description, presence: :true
   validates :part_number, presence: :true
@@ -24,6 +23,7 @@ class IncomingReceiptDetail < ActiveRecord::Base
     inventory = Inventory.new(
       item: item,
       current_stock: self.qty,
+      initial_stock: self.qty,
       unit_price: self.unit_price,
       incoming_receipt: self.incoming_receipt
     )
@@ -33,7 +33,9 @@ class IncomingReceiptDetail < ActiveRecord::Base
   def update_inventory_upon_update
     item = Item.find_by_description_and_part_number(self.description, self.part_number)
     inventory = item.inventories.where(incoming_receipt: self.incoming_receipt).first
-    inventory.update_attributes(current_stock: self.qty, unit_price: self.unit_price)
+    stock_diff = self.qty - inventory.initial_stock
+    current_stock = inventory.current_stock + stock_diff
+    inventory.update_attributes(initial_stock: self.qty, current_stock: current_stock, unit_price: self.unit_price)
   end
 
   def get_item

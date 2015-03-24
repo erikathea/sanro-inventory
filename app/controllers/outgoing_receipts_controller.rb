@@ -19,6 +19,11 @@ class OutgoingReceiptsController < ApplicationController
     render 'index'
   end
 
+  def generate_report
+    @outgoing_receipts = OutgoingReceipt.all
+    render 'index'
+  end
+
   def show
     respond_with(@outgoing_receipt)
   end

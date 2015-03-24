@@ -13,13 +13,13 @@
 .pull-right
   %h4
     Total:
-    = @outgoing_receipt.total
+    = number_with_precision(@outgoing_receipt.total, precision:2)
   %p
     %b Amount received:
-    = @outgoing_receipt.amount_received
+    = number_with_precision(@outgoing_receipt.amount_received, precision:2)
   %p
     %b Balance:
-    = @outgoing_receipt.balance
+    = number_with_precision(@outgoing_receipt.balance, precision:2)
 
 %p
   %b Date issued:
