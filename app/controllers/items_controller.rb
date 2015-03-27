@@ -64,6 +64,7 @@ class ItemsController < ApplicationController
       format.json{ render json: ajaxList }
     end
   end
+
   private
     def set_item
       @item = Item.find(params[:id])

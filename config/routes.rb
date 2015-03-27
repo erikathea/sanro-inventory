@@ -9,15 +9,10 @@ Rails.application.routes.draw do
     collection do
       get 'sales_invoices'
       get 'deliveries'
-      get 'generate_report'
     end
   end
 
-  resources :incoming_receipts do
-    collection do
-      get 'generate_report'
-    end
-  end
+  resources :incoming_receipts
 
   resources :inventories
 
@@ -26,7 +21,6 @@ Rails.application.routes.draw do
       get 'descriptions'
       get 'part_numbers'
       get 'ajaxList'
-      get 'generate_report'
     end
   end
 
@@ -34,6 +28,10 @@ Rails.application.routes.draw do
 
   get 'generate_report' => 'dashboard#generate_report'
   post 'generate_report' => 'dashboard#generate_report'
+  get 'stock_report' => 'reports#stocks'
+  get 'delivery_report' => 'reports#deliveries'
+  get 'si_report' => 'reports#sis'
+  get 'dr_report' => 'reports#drs'
   root 'dashboard#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,8 +1,8 @@
 = form_tag('/generate_report') do
-  .field.form-group
+  .field.form-group.report-type
     = label_tag 'Select report type'
     = select_tag 'report', options_for_select([ 'Stocks', 'Acquisition (Delivery)', 'Delivery (DR)', 'Sale Invoice (SI)' ], 'Stocks'), class: 'form-control'
-  .field.form-group
+  .field.form-group.date-month
     = label_tag 'Select month'
     = month_field_tag 'Month', class: 'form-control'
   .actions

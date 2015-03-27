@@ -204,6 +204,15 @@ ready  = ->
         return item
       allowNew: false
     return
+
+  $('.date-month').hide()
+  $('.report-type select').on('change', ->
+    if ($(this).val() == 'Stocks')
+      $('.date-month').hide()
+    else
+      $('.date-month').show()
+  )
+
   return
 
 $(document).ready(ready)
