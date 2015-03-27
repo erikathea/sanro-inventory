@@ -6,6 +6,7 @@ class OutgoingReceiptDetail < ActiveRecord::Base
   validates :qty, presence: true
   validate :has_item?
   validate :has_stock?, on: :create
+  validate :has_enough_stock?, on: :update
 
   after_create :update_inventory_upon_create
   before_update :update_inventory_upon_update
@@ -17,6 +18,14 @@ class OutgoingReceiptDetail < ActiveRecord::Base
 
   def has_stock?
     errors.add(:item, 'has insufficient stock') if self.qty > self.item.total_stock
+  end
+
+  def has_enough_stock?
+    # scenario: purchasing additional qty of the item
+    diff_qty = self.qty_was - self.qty
+    if diff_qty < 0
+     errors.add(:item, 'has insufficient stock') if diff_qty.abs > self.item.total_stock
+    end
   end
 
   def update_inventory_upon_create
@@ -67,11 +76,23 @@ class OutgoingReceiptDetail < ActiveRecord::Base
   end
 
   def update_inventory_upon_update
+    inventories = Inventory.order(:id).where("item_id = #{item.id} AND inventory_id IS NOT NULL").reverse
     qty_diff = self.qty_was - self.qty
-    # qty_diff results:
-    # negative, create inventory with negative stock count
-    # positive, create inventory with positive stock count
 
-    pry
+    if qty_diff < 0
+      # qty_diff negative, scenario: purchasing additional qty of item
+      inventory = inventories.first.inventory
+      if inventory.current_stock > 0
+        stock = inventory.current_stock + qty_diff
+        inventory.update_attributes(current_stock: stock)
+
+        stock = inventory.first.current_stock + qty_diff
+        inventory.first.update_attributes(current_stock: stock)
+      else
+        update_inventory_item(qty_diff.abs)
+      end
+    else
+      # qty positive, scenario: returning of qty item
+    end
   end
 end
