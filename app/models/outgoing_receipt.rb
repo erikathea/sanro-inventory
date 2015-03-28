@@ -15,6 +15,14 @@ class OutgoingReceipt < ActiveRecord::Base
     self.sale_type == 0? 'Sales Invoice (SI)' : 'Delivery Receipt (DR)'
   end
 
+  def type_short_title
+    self.sale_type == 0? 'SI' : 'DR'
+  end
+
+  def link_back
+    self.sale_type == 0? 'sales_invoices_outgoing_receipts_path' : 'deliveries_outgoing_receipts_path'
+  end
+
   private
   def has_one_receipt_detail?
     if self.outgoing_receipt_details.empty?

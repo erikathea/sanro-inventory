@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-
+  helper InventoriesHelper
   respond_to :html
 
   def index
@@ -8,11 +8,15 @@ class ItemsController < ApplicationController
     respond_with(@items)
   end
 
+  def generate_report
+  end
+
   def show
     respond_with(@item)
   end
 
   def new
+    authorize Item
     @item = Item.new
     respond_with(@item)
   end
@@ -53,16 +57,18 @@ class ItemsController < ApplicationController
   def ajaxList
     ajaxList = []
     Item.all.each do |item|
-      ajaxList << "#{item.description} - #{item.part_number} - #{item.id}"
+      ajaxList << "#{item.description} #{item.part_number} |#{item.id}"
     end
     respond_to do |format|
       format.html
       format.json{ render json: ajaxList }
     end
   end
+
   private
     def set_item
       @item = Item.find(params[:id])
+      authorize @item
     end
 
     def item_params

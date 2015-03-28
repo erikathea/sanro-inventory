@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   resources :outgoing_receipts do
     get 'add_si', on: :new
     get 'add_dr', on: :new
+    collection do
+      get 'sales_invoices'
+      get 'deliveries'
+    end
   end
 
   resources :incoming_receipts
@@ -22,6 +26,12 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  get 'generate_report' => 'dashboard#generate_report'
+  post 'generate_report' => 'dashboard#generate_report'
+  get 'stock_report' => 'reports#stocks'
+  get 'delivery_report' => 'reports#deliveries'
+  get 'si_report' => 'reports#sis'
+  get 'dr_report' => 'reports#drs'
   root 'dashboard#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

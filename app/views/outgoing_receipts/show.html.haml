@@ -1,4 +1,29 @@
+%h3
+  = @outgoing_receipt.type_title
+  no. #{@outgoing_receipt.receipt_number}
+  %small
+    = link_to 'Edit', edit_outgoing_receipt_path(@outgoing_receipt), class: 'glyphicon glyphicon-pencil btn btn-link btn-xs'
+  %small
+    = link_to 'Destroy', @outgoing_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'glyphicon glyphicon-trash btn btn-link btn-xs'
+  %small
+    = link_to "Back to #{@outgoing_receipt.type_short_title.pluralize}", eval(@outgoing_receipt.link_back), class: 'glyphicon glyphicon-arrow-left btn btn-link btn-xs'
+
 %p#notice= notice
+
+.pull-right
+  %h4
+    Total:
+    = number_with_precision(@outgoing_receipt.total, precision:2)
+  %p
+    %b Amount received:
+    = number_with_precision(@outgoing_receipt.amount_received, precision:2)
+  %p
+    %b Balance:
+    = number_with_precision(@outgoing_receipt.balance, precision:2)
+
+%p
+  %b Date issued:
+  = @outgoing_receipt.date_issued
 
 %p
   %b Receipt number:
@@ -9,22 +34,8 @@
 %p
   %b Address:
   = @outgoing_receipt.address
-%p
-  %b Date issued:
-  = @outgoing_receipt.date_issued
-%p
-  %b Total:
-  = @outgoing_receipt.total
-%p
-  %b Amount received:
-  = @outgoing_receipt.amount_received
-%p
-  %b Balance:
-  = @outgoing_receipt.balance
-%p
-  %b Type:
-  = @outgoing_receipt.type_title
 
-= link_to 'Edit', edit_outgoing_receipt_path(@outgoing_receipt)
-\|
-= link_to 'Back', outgoing_receipts_path
+%br
+
+= render 'outgoing_receipt_details/list', outgoing_receipt_details: @outgoing_receipt.outgoing_receipt_details
+

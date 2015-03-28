@@ -19,13 +19,11 @@
         %td= incoming_receipt.supplier
         %td= incoming_receipt.address
         %td= incoming_receipt.date_issued
-        %td= incoming_receipt.total
-        %td= incoming_receipt.amount_received
-        %td= incoming_receipt.balance
-        /%td= link_to 'Show', incoming_receipt
-        /%td= link_to 'Edit', edit_incoming_receipt_path(incoming_receipt)
-        /%td= link_to 'Destroy', incoming_receipt, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Incoming receipt', new_incoming_receipt_path
+        %td
+          .pull-right.text-success
+            %b= number_with_precision(incoming_receipt.total, precision:2)
+        %td
+          .pull-right= number_with_precision(incoming_receipt.amount_received, precision:2)
+        %td
+          .pull-right.text-danger
+            %b= number_with_precision(incoming_receipt.balance, precision:2)

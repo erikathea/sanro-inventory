@@ -9,7 +9,8 @@ class IncomingReceiptDetail < ActiveRecord::Base
   validates :total, presence: :true
 
   before_save :strip_and_upcase_strings
-  after_save :update_inventory
+  after_create :update_inventory_upon_create
+  after_update :update_inventory_upon_update
 
   private
   def strip_and_upcase_strings
@@ -17,15 +18,24 @@ class IncomingReceiptDetail < ActiveRecord::Base
     self.part_number = self.part_number.strip.upcase
   end
 
-  def update_inventory
+  def update_inventory_upon_create
     item = get_item
     inventory = Inventory.new(
       item: item,
       current_stock: self.qty,
+      initial_stock: self.qty,
       unit_price: self.unit_price,
-      incoming_receipt: self.incoming_receipt
+      incoming_receipt_detail: self
     )
     inventory.save
+  end
+
+  def update_inventory_upon_update
+    item = Item.find_by_description_and_part_number(self.description, self.part_number)
+    inventory = item.inventories.where(incoming_receipt: self.incoming_receipt).first
+    stock_diff = self.qty - inventory.initial_stock
+    current_stock = inventory.current_stock + stock_diff
+    inventory.update_attributes(initial_stock: self.qty, current_stock: current_stock, unit_price: self.unit_price)
   end
 
   def get_item

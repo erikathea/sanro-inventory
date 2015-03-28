@@ -5,15 +5,14 @@
       %th Part number
       %th Selling price
       %th Total Stock
-      /%th
-      /%th
 
   %tbody
     - @items.each do |item|
       %tr
         %td= link_to item.description, item
         %td= item.part_number
-        %td= item.selling_price
-        %td= item.total_stock
-        /%td= link_to 'Show', item
-        /%td= link_to 'Destroy', item, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td
+          .pull-right= number_with_precision(item.selling_price, precision:2)
+        %td
+          .pull-right.text-success
+            %b= number_with_precision(item.total_stock, precision:2)

@@ -10,24 +10,41 @@
       = link_to 'Home', root_path, class: 'navbar-brand'
     .collapse.navbar-collapse
       = render 'layouts/navigation_links'
-%nav.navbar-default
-  - if user_signed_in?
-    %ul.nav.nav-tabs#sub_nav
-      /%li= link_to 'Inventory List', inventories_path, class: 'glyphicon glyphicon-tasks btn btn-link btn-xs'
-      %li.dropdown
-        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-          %span.glyphicon.glyphicon-list-alt
-            Receipts
-          %span.caret
-        %ul.dropdown-menu{:role => "menu"}
-          %li{:role => 'presentation'}
-            = link_to 'Deliveries', incoming_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
-          %li{:role => 'presentation'}
-            = link_to 'Add Delivery', new_incoming_receipt_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
-          %li{:role => 'presentation'}
-            = link_to 'Add DR', add_dr_new_outgoing_receipt_path,   class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
-          %li{:role => 'presentation'}
-            = link_to 'Add SI', add_si_new_outgoing_receipt_path,  class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs pull-left', :role => 'menuitem', :tabindex => '-1'
 
-      %li= link_to 'Manage Items', items_path, class: 'glyphicon glyphicon-briefcase btn btn-link btn-xs'
-      %li= link_to 'Add Inventory Item', new_item_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs'
+- if user_signed_in?
+  %nav.navbar.navbar-default
+    .container
+      .collapse.navbar-collapse
+        %ul#sub_nav.nav.navbar-nav
+          %li.dropdown
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              %span.glyphicon.glyphicon-list-alt
+                Receipts
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              %li{:role => 'presentation'}
+                = link_to ' Delivery Inventory', incoming_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+              %li{:role => 'presentation'}
+                = link_to ' Add Delivery Inventory', new_incoming_receipt_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+              %li{:role => 'presentation'}
+                = link_to ' DRs', deliveries_outgoing_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+              %li{:role => 'presentation'}
+                = link_to ' Add DR', add_dr_new_outgoing_receipt_path,   class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+              %li{:role => 'presentation'}
+                = link_to ' SIs', sales_invoices_outgoing_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+              %li{:role => 'presentation'}
+                = link_to ' Add SI', add_si_new_outgoing_receipt_path,  class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+
+          %li.dropdown
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              %span.glyphicon.glyphicon-briefcase
+                Inventory
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              %li{:role => 'presentation'}
+                = link_to ' Inventory Items', items_path, class: 'glyphicon glyphicon-tag btn btn-link btn-xs'
+              %li{:role => 'presentation'}
+                = link_to ' New Inventory Item', new_item_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs'
+
+          %li.pull-left
+            = link_to ' Reports', generate_report_path, class: 'glyphicon glyphicon-book btn btn-link btn-xs'

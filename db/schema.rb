@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315191720) do
+ActiveRecord::Schema.define(version: 20150327231848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,17 +44,20 @@ ActiveRecord::Schema.define(version: 20150315191720) do
 
   create_table "inventories", force: true do |t|
     t.integer  "item_id"
-    t.decimal  "unit_price",          precision: 15, scale: 2
+    t.decimal  "unit_price",                 precision: 15, scale: 2
     t.float    "current_stock"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "incoming_receipt_id"
-    t.integer  "outgoing_receipt_id"
+    t.integer  "incoming_receipt_detail_id"
+    t.integer  "outgoing_receipt_detail_id"
+    t.float    "initial_stock"
+    t.integer  "inventory_id"
   end
 
-  add_index "inventories", ["incoming_receipt_id"], name: "index_inventories_on_incoming_receipt_id", using: :btree
+  add_index "inventories", ["incoming_receipt_detail_id"], name: "index_inventories_on_incoming_receipt_detail_id", using: :btree
+  add_index "inventories", ["inventory_id"], name: "index_inventories_on_inventory_id", using: :btree
   add_index "inventories", ["item_id"], name: "index_inventories_on_item_id", using: :btree
-  add_index "inventories", ["outgoing_receipt_id"], name: "index_inventories_on_outgoing_receipt_id", using: :btree
+  add_index "inventories", ["outgoing_receipt_detail_id"], name: "index_inventories_on_outgoing_receipt_detail_id", using: :btree
 
   create_table "items", force: true do |t|
     t.string   "description"
@@ -104,6 +107,7 @@ ActiveRecord::Schema.define(version: 20150315191720) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_admin"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

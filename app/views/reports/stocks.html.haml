@@ -1,0 +1,38 @@
+%table.table.table-hover.table-responsive
+  %thead
+    %tr
+      %th Description
+      %th Part Number
+      %th
+        .pull-right Unit Price
+      %th
+        .pull-right Initial Stock
+      %th
+        .pull-right Current Stock
+      %th
+        .pull-right Amount
+
+
+  %tbody
+    - @inventories.each do |inventory|
+      %tr
+        %td= inventory.item.description
+        %td= inventory.item.part_number
+        %td
+          .pull-right= number_with_precision(inventory.unit_price, precision:2)
+        %td
+          .pull-right= number_with_precision(inventory.initial_stock, precision:2)
+        %td
+          .pull-right
+            %b= inventory.current_stock
+        %td
+          %b.pull-right= style_stock(number_with_precision(inventory.unit_price_amount, precision:2))
+    %tr
+      %td
+      %td
+      %td
+      %td
+      %td
+        %b.pull-right Total
+      %td
+        %b.pull-right= style_stock(number_with_precision(@inventories.map(&:unit_price_amount).sum, precision:2))

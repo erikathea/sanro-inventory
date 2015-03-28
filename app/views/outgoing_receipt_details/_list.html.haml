@@ -1,0 +1,23 @@
+%table.table.table-hover.table-responsive.receipt#outgoing
+  %thead
+    %tr
+      %th Description
+      %th Part number
+      %th Qty
+      %th Unit
+      %th Selling price
+      %th Total
+
+  %tbody
+    - outgoing_receipt_details.each do |outgoing_receipt_detail|
+      %tr
+        %td= link_to outgoing_receipt_detail.item.description, item_path(outgoing_receipt_detail.item)
+        %td= outgoing_receipt_detail.item.part_number
+        %td= number_with_precision(outgoing_receipt_detail.qty, precision: 2)
+        %td= outgoing_receipt_detail.unit
+        %td
+          .pull-right
+            %b= number_with_precision(outgoing_receipt_detail.selling_price, precision:2)
+        %td
+          .pull-right.text-success
+            %b= number_with_precision(outgoing_receipt_detail.total, precision:2)

@@ -4,8 +4,11 @@ class IncomingReceiptsController < ApplicationController
   respond_to :html
 
   def index
-    @incoming_receipts = IncomingReceipt.all
+    @incoming_receipts = IncomingReceipt.includes(:incoming_receipt_details).all
     respond_with(@incoming_receipts)
+  end
+
+  def generate_report
   end
 
   def show
@@ -13,6 +16,7 @@ class IncomingReceiptsController < ApplicationController
   end
 
   def new
+    authorize IncomingReceipt
     @incoming_receipt = IncomingReceipt.new
     respond_with(@incoming_receipt)
   end
@@ -40,6 +44,7 @@ class IncomingReceiptsController < ApplicationController
     def set_incoming_receipt
       @incoming_receipt = IncomingReceipt.find(params[:id])
       @incoming_receipt.date_issued = @incoming_receipt.date_issued.strftime("%d/%m/%Y")
+      authorize @incoming_receipt
     end
 
     def incoming_receipt_params

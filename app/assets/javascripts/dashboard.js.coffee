@@ -108,7 +108,7 @@ ready  = ->
         source: data
         updater: (item) ->
           el_item = this.$element.parent().find('.hidden-item-id')[0]
-          el_item.value = item.split(' - ')[2]
+          el_item.value = item.split('|')[1]
           return item
         allowNew: false
       return
@@ -157,7 +157,7 @@ ready  = ->
   $('.new_receipt div.receipt-amount-received input').on('focusout', ->
     balance = $('.new_receipt div.receipt-balance input')[0]
     total = parseFloat($('.new_receipt div.receipt-total input')[0].value)
-    balance.value =  total - parseFloat(this.value)
+    balance.value =  (Number(total).toFixed(2) - Number(this.value).toFixed(2)).toFixed(2)
     return
   )
 
@@ -204,6 +204,15 @@ ready  = ->
         return item
       allowNew: false
     return
+
+  $('.date-month').hide()
+  $('.report-type select').on('change', ->
+    if ($(this).val() == 'Stocks')
+      $('.date-month').hide()
+    else
+      $('.date-month').show()
+  )
+
   return
 
 $(document).ready(ready)
