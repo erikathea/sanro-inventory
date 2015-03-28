@@ -8,7 +8,7 @@ class Item < ActiveRecord::Base
   validate :item_already_exists?
 
   def total_stock
-    self.inventories.where('incoming_receipt_id IS NOT NULL OR initial_stock IS NOT NULL').map(&:current_stock).inject{|sum, x| sum + x}
+    self.inventories.where('incoming_receipt_detail_id IS NOT NULL OR initial_stock IS NOT NULL').map(&:current_stock).inject{|sum, x| sum + x}
   end
 
   def full_description

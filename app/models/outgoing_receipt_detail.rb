@@ -48,7 +48,7 @@ class OutgoingReceiptDetail < ActiveRecord::Base
     inventory = Inventory.new(
         item: item,
         current_stock: stock,
-        outgoing_receipt: self.outgoing_receipt,
+        outgoing_receipt_detail: self.outgoing_receipt_detail,
         unit_price: unit_price,
         initial_stock: initial_stock,
         inventory: inventory
@@ -76,11 +76,12 @@ class OutgoingReceiptDetail < ActiveRecord::Base
   end
 
   def update_inventory_upon_update
-    inventories = Inventory.order(:id).where("item_id = #{item.id} AND inventory_id IS NOT NULL").reverse
+
     qty_diff = self.qty_was - self.qty
 
     if qty_diff < 0
       # qty_diff negative, scenario: purchasing additional qty of item
+      inventories = Inventory.order(:id).where("item_id = #{item.id} AND inventory_id IS NOT NULL").reverse
       inventory = inventories.first.inventory
       if inventory.current_stock > 0
         stock = inventory.current_stock + qty_diff
@@ -92,7 +93,25 @@ class OutgoingReceiptDetail < ActiveRecord::Base
         update_inventory_item(qty_diff.abs)
       end
     else
-      # qty positive, scenario: returning of qty item
+      # qty_diff positive, scenario: returning of qty item
+      temp_qty = qty_diff
+      inventories = Inventory.order(:id).where("item_id = #{item.id} AND initial_stock IS NOT NULL").reverse
+      inventories.each do |inventory|
+        break if temp_qty <= 0
+        stock_slot = inventory.initial_stock - inventory.current_stock
+        stock = (stock_slot < temp_qty) ? inventory.initial_stock : (inventory.current_stock + temp_qty)
+        inventory.update_attributes(current_stock: stock)
+        temp_qty = temp_qty - stock_slot
+      end
+
+      temp_qty = qty_diff
+      inventories = Inventory.order(:id).where("item_id = #{item.id} AND outgoing_receipt_detail_id = #{self.id}").reverse
+      inventories.each do |inventory|
+        break if temp_qty <= 0
+        stock = (temp_qty > inventory.current_stock.abs) ? 0 : (inventory.current_stock + temp_qty)
+        temp_qty = temp_qty + inventory.current_stock
+        inventory.update_attributes(current_stock: stock)
+      end
     end
   end
 end

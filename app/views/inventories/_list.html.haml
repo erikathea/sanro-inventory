@@ -15,22 +15,22 @@
         %td= inventory.id
         %td= inventory.item.full_description
         %td
-          - if inventory.incoming_receipt.present?
-            = link_to inventory.incoming_receipt.receipt_number, incoming_receipt_path(inventory.incoming_receipt)
-          - if inventory.outgoing_receipt.present?
-            = link_to inventory.outgoing_receipt.receipt_number, outgoing_receipt_path(inventory.outgoing_receipt)
+          - if inventory.incoming_receipt_detail.present?
+            = link_to inventory.incoming_receipt_detail.incoming_receipt.receipt_number, incoming_receipt_path(inventory.incoming_receipt_detail.incoming_receipt)
+          - if inventory.outgoing_receipt_detail.present?
+            = link_to inventory.outgoing_receipt_detail.outgoing_receipt.receipt_number, outgoing_receipt_path(inventory.outgoing_receipt_detail.outgoing_receipt)
         %td
           .pull-right
-            - if !inventory.outgoing_receipt
+            - if !inventory.outgoing_receipt_detail
               %b.text-info= number_with_precision(inventory.unit_price, precision:2)
             - else
               = number_with_precision(inventory.unit_price, precision:2)
         %td
           .pull-right
-            - if inventory.incoming_receipt.present?
+            - if inventory.incoming_receipt_detail.present?
               = number_with_precision(inventory.item.selling_price, precision:2)
-            - if inventory.outgoing_receipt.present?
-              %b.text-info= number_with_precision(inventory.outgoing_receipt.outgoing_receipt_details.where(item: inventory.item).first.selling_price, precision:2)
+            - if inventory.outgoing_receipt_detail.present?
+              %b.text-info= number_with_precision(inventory.outgoing_receipt_detail.selling_price, precision:2)
         %td
           .pull-right
             %b= style_stock(inventory.current_stock)
