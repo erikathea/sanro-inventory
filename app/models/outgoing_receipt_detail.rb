@@ -95,7 +95,7 @@ class OutgoingReceiptDetail < ActiveRecord::Base
     else
       # qty_diff positive, scenario: returning of qty item
       temp_qty = qty_diff
-      inventories = Inventory.order(:id).where("item_id = #{item.id} AND initial_stock IS NOT NULL").reverse
+      inventories = Inventory.order(:id).where("item_id = #{item.id} AND initial_stock IS NOT NULL")
       inventories.each do |inventory|
         break if temp_qty <= 0
         stock_slot = inventory.initial_stock - inventory.current_stock
