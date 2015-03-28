@@ -48,7 +48,7 @@ class OutgoingReceiptDetail < ActiveRecord::Base
     inventory = Inventory.new(
         item: item,
         current_stock: stock,
-        outgoing_receipt_detail: self.outgoing_receipt_detail,
+        outgoing_receipt_detail: self,
         unit_price: unit_price,
         initial_stock: initial_stock,
         inventory: inventory

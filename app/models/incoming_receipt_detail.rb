@@ -25,14 +25,14 @@ class IncomingReceiptDetail < ActiveRecord::Base
       current_stock: self.qty,
       initial_stock: self.qty,
       unit_price: self.unit_price,
-      incoming_receipt_detail: self.incoming_receipt_detail
+      incoming_receipt_detail: self
     )
     inventory.save
   end
 
   def update_inventory_upon_update
     item = Item.find_by_description_and_part_number(self.description, self.part_number)
-    inventory = item.inventories.where(incoming_receipt_detail: self.incoming_receipt_detail).first
+    inventory = item.inventories.where(incoming_receipt: self.incoming_receipt).first
     stock_diff = self.qty - inventory.initial_stock
     current_stock = inventory.current_stock + stock_diff
     inventory.update_attributes(initial_stock: self.qty, current_stock: current_stock, unit_price: self.unit_price)
