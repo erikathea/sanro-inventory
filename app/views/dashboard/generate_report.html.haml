@@ -1,9 +1,15 @@
 = form_tag('/generate_report') do
   .field.form-group.report-type
     = label_tag 'Select report type'
-    = select_tag 'report', options_for_select([ 'Stocks', 'Acquisition (Delivery)', 'Delivery (DR)', 'Sale Invoice (SI)' ], 'Stocks'), class: 'form-control'
+    = select_tag 'report', options_for_select([ 'Stocks', 'Delivery Inventory', 'Delivery (DR)', 'Sale Invoice (SI)' ], 'Stocks'), class: 'form-control'
+  .field.form-group.report-period
+    = label_tag 'Select report period'
+    = select_tag 'period', options_for_select([ 'Monthly', 'Annual' ], 'Monthly'), class: 'form-control'
   .field.form-group.date-month
     = label_tag 'Select month'
-    = month_field_tag 'Month', class: 'form-control'
+    = date_select 'report-month', '',{discard_day: true}, class: 'form-control'
+  .field.form-group.date-year
+    = label_tag 'Select year'
+    = date_select 'report-year', '',{discard_day: true, discard_month: true}, class: 'form-control'
   .actions
     = submit_tag 'Generate Report'

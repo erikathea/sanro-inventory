@@ -206,11 +206,25 @@ ready  = ->
     return
 
   $('.date-month').hide()
+  $('.date-year').hide()
+  $('.report-period').hide()
   $('.report-type select').on('change', ->
     if ($(this).val() == 'Stocks')
       $('.date-month').hide()
+      $('.date-year').hide()
+      $('.report-period').hide()
     else
       $('.date-month').show()
+      $('.report-period').show()
+  )
+
+  $('.report-period').on('change', ->
+    if ($(this).find('select').val()=='Monthly')
+      $('.date-month').show()
+      $('.date-year').hide()
+    else
+      $('.date-month').hide()
+      $('.date-year').show()
   )
 
   return

@@ -9,6 +9,12 @@
     Cel. No. 0919-395-3683 / 0921-491-0069
   %br
   %h2=@title
-  %h6
-    As of
-    = Date.today
+  - if @date_header
+    %h3= @date_header
+    %h6
+      Generated
+      = Date.today
+  - else
+    %h6
+      As of
+      = Date.today
