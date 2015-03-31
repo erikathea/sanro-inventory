@@ -67,7 +67,7 @@ class ItemsController < ApplicationController
 
   private
     def set_item
-      @item = Item.find(params[:id])
+      @item = Item.includes(:inventories).find(params[:id])
       authorize @item
     end
 
