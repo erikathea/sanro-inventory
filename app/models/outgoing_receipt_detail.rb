@@ -11,6 +11,10 @@ class OutgoingReceiptDetail < ActiveRecord::Base
   after_create :update_inventory_upon_create
   before_update :update_inventory_upon_update
 
+  def sp_amount
+    qty * selling_price
+  end
+
   private
   def has_item?
     errors.add(:item, 'not found') if !self.item.present?

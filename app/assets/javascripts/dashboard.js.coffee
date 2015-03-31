@@ -23,6 +23,15 @@ ready  = ->
         pagingType: 'simple_numbers'
         dom: '<"top"lf>rt<"bottom"ip><"clear">'
 
+  if !$.fn.dataTable.isDataTable( ".reports" )
+    report = $('.reports').DataTable
+        sPaginationType: 'full_numbers'
+        bJQueryUI: true
+        'order': [[0, 'asc']]
+        paging: false
+        searching: false
+    new $.fn.dataTable.FixedHeader(report, {bottom: true})
+
   ### datepicker - add/update receipt form ###
   $('.receipt_date_issued').datepicker(
      dateFormat: "dd/mm/yy"

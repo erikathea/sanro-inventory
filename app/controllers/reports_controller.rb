@@ -12,10 +12,14 @@ class ReportsController < ApplicationController
 
   def drs
     @title = 'Delivery Receipts'
+    details = OutgoingReceiptDetail.joins(:outgoing_receipt).where(outgoing_receipts: {date_issued: report_period, sale_type: 1})
+    @inventories = Inventory.where(outgoing_receipt_detail: details).where.not(current_stock: 0).includes(:outgoing_receipt_detail).includes(:item)
   end
 
   def sis
     @title = 'Sale Invoices'
+    details = OutgoingReceiptDetail.joins(:outgoing_receipt).where(outgoing_receipts: {date_issued: report_period, sale_type: 0})
+    @inventories = Inventory.where(outgoing_receipt_detail: details).where.not(current_stock: 0).includes(:outgoing_receipt_detail).includes(:item)
   end
 
   private
