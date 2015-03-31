@@ -10,8 +10,12 @@
     = f.label :date_issued
     = f.text_field :date_issued, class: 'receipt_date_issued form-control', readonly: true
   .field.form-group.col-xs-6
-    = f.label :receipt_number
+    = f.label :receipt_number, 'Receipt No.'
     = f.text_field :receipt_number, class: 'form-control'
+  - if @outgoing_receipt.sale_type == 1
+    .field.form-group.col-xs-12
+      = f.label :po_no, 'PO No. (Optional)'
+      = f.text_field :po_no, class: 'form-control'
   .field.form-group.col-xs-12
     = f.label :client
     = f.text_field :client, class: 'form-control'

@@ -26,8 +26,11 @@
   = @outgoing_receipt.date_issued
 
 %p
-  %b Receipt number:
+  %b Receipt No:
   = @outgoing_receipt.receipt_number
+%p
+  %b PO No:
+  = @outgoing_receipt.po_no
 %p
   %b Client:
   = @outgoing_receipt.client
