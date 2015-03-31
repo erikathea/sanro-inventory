@@ -4,10 +4,13 @@
     = select_tag 'report', options_for_select([ 'Stocks', 'Delivery Inventory', 'Delivery (DR)', 'Sale Invoice (SI)' ], 'Stocks'), class: 'form-control'
   .field.form-group.report-period.hide
     = label_tag 'Select report period'
-    = select_tag 'period', options_for_select([ 'Monthly', 'Annual' ], 'Monthly'), class: 'form-control'
+    = select_tag 'period', options_for_select([ 'Monthly', 'Quarterly', 'Annual' ], 'Monthly'), class: 'form-control'
     .field.form-group.date-month
       = label_tag 'Select month'
       = date_select 'report-month', '',{discard_day: true}, class: 'form-control'
+  .field.form-group.date-quarter.hide
+    = label_tag 'Select quarter'
+    = select_tag 'quarter', options_for_select([ '1st', '2nd', '3rd', '4th' ], '1st'), class: 'form-control'
   .field.form-group.date-year.hide
     = label_tag 'Select year'
     = date_select 'report-year', '',{discard_day: true, discard_month: true}, class: 'form-control'

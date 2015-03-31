@@ -219,22 +219,29 @@ ready  = ->
   $('.date-year').addClass('hide').hide()
   $('.report-period').addClass('hide').hide()
   $('.report-type select').on('change', ->
+    # reset options
+    $('.date-month').removeClass('hide').show()
+    $('.date-year').addClass('hide').hide()
+    $('.date-quarter').addClass('hide').hide()
+    $('.report-period').removeClass('hide').show()
+    $('.report-period select').prop('selectedIndex', 0)
+
     if ($(this).val() == 'Stocks')
       $('.date-month').addClass('hide').hide()
-      $('.date-year').addClass('hide').hide()
       $('.report-period').addClass('hide').hide()
-    else
-      $('.date-month').removeClass('hide').show()
-      $('.report-period').removeClass('hide').show()
   )
 
   $('.report-period').on('change', ->
+    # reset options
+    $('.date-month').addClass('hide').hide()
+    $('.date-quarter').addClass('hide').hide()
+    $('.date-year').removeClass('hide').show()
+
     if ($(this).find('select').val()=='Monthly')
       $('.date-month').removeClass('hide').show()
       $('.date-year').addClass('hide').hide()
-    else
-      $('.date-month').addClass('hide').hide()
-      $('.date-year').removeClass('hide').show()
+    else if ($(this).find('select').val()=='Quarterly')
+      $('.date-quarter').removeClass('hide').show()
   )
 
   return

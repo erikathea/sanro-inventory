@@ -28,6 +28,11 @@ class DashboardController < ApplicationController
       return {type: 'monthly', month: month, year: year}
     else
       year = params['report-year']['(1i)'].to_i
+    end
+
+    if params[:period] == 'Quarterly'
+      return {type: 'quarter', year: year, quarter: params[:quarter]}
+    else
       return {type: 'annual', year: year}
     end
   end
