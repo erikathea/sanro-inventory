@@ -1,4 +1,6 @@
 class ReportsController < ApplicationController
+  before_action :authorized?
+
   def stocks
     @title = 'List of Stocks'
     @inventories = Inventory.includes(:item).order('items.description').where('current_stock > 0')
@@ -30,20 +32,25 @@ class ReportsController < ApplicationController
   end
 
   private
+  def authorized?
+    unless current_user.is_admin.present?
+      raise Pundit::NotAuthorizedError
+    end
+  end
+
   def report_period
+    year = params[:period][:year].to_i
+
     if params[:period][:type] == 'monthly'
       month = params[:period][:month].to_i
-      year = params[:period][:year].to_i
       @date_header = Date.new(year, month).strftime('%B %Y')
       return (Date.new(year, month))...(Date.new(year, month).next_month)
     elsif params[:period][:type] == 'quarter'
-      year = params[:period][:year].to_i
       @date_header = "#{params[:period][:quarter]} Quarter #{year}"
       end_month = params[:period][:quarter].to_i * 3
       start_month = end_month - 2
       return (Date.new(year, start_month))...(Date.new(year, end_month))
     else
-      year = params[:period][:year].to_i
       @date_header = Date.new(year).strftime('%Y')
       return (Date.new(year))...(Date.new(year).next_year)
     end

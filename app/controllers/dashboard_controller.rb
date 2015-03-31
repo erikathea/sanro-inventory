@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
+  before_action :authorized?, except: [:index]
   def index
-    @inventories = Inventory.all
   end
 
   def generate_report
@@ -26,6 +26,12 @@ class DashboardController < ApplicationController
   end
 
   private
+  def authorized?
+    unless current_user.is_admin.present?
+      raise Pundit::NotAuthorizedError
+    end
+  end
+
   def set_report_period
     if params[:period] == 'Monthly'
       year = params['report-month']['(1i)'].to_i
