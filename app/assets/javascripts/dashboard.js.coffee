@@ -24,13 +24,14 @@ ready  = ->
         dom: '<"top"lf>rt<"bottom"ip><"clear">'
 
   if !$.fn.dataTable.isDataTable( ".reports" )
-    report = $('.reports').DataTable
-        sPaginationType: 'full_numbers'
-        bJQueryUI: true
-        'order': [[0, 'asc']]
-        paging: false
-        searching: false
-    new $.fn.dataTable.FixedHeader(report, {bottom: true})
+    if $('.reports') > 0
+      $report = $('.reports').DataTable
+          sPaginationType: 'full_numbers'
+          bJQueryUI: true
+          'order': [[0, 'asc']]
+          paging: false
+          searching: false
+      new $.fn.dataTable.FixedHeader($report, {bottom: true})
 
   ### datepicker - add/update receipt form ###
   $('.receipt_date_issued').datepicker(
@@ -214,26 +215,33 @@ ready  = ->
       allowNew: false
     return
 
-  $('.date-month').hide()
-  $('.date-year').hide()
-  $('.report-period').hide()
+  $('.date-month').addClass('hide').hide()
+  $('.date-year').addClass('hide').hide()
+  $('.report-period').addClass('hide').hide()
   $('.report-type select').on('change', ->
+    # reset options
+    $('.date-month').removeClass('hide').show()
+    $('.date-year').addClass('hide').hide()
+    $('.date-quarter').addClass('hide').hide()
+    $('.report-period').removeClass('hide').show()
+    $('.report-period select').prop('selectedIndex', 0)
+
     if ($(this).val() == 'Stocks')
-      $('.date-month').hide()
-      $('.date-year').hide()
-      $('.report-period').hide()
-    else
-      $('.date-month').show()
-      $('.report-period').show()
+      $('.date-month').addClass('hide').hide()
+      $('.report-period').addClass('hide').hide()
   )
 
   $('.report-period').on('change', ->
+    # reset options
+    $('.date-month').addClass('hide').hide()
+    $('.date-quarter').addClass('hide').hide()
+    $('.date-year').removeClass('hide').show()
+
     if ($(this).find('select').val()=='Monthly')
-      $('.date-month').show()
-      $('.date-year').hide()
-    else
-      $('.date-month').hide()
-      $('.date-year').show()
+      $('.date-month').removeClass('hide').show()
+      $('.date-year').addClass('hide').hide()
+    else if ($(this).find('select').val()=='Quarterly')
+      $('.date-quarter').removeClass('hide').show()
   )
 
   return
