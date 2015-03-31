@@ -22,6 +22,9 @@ class ReportsController < ApplicationController
     @inventories = Inventory.where(outgoing_receipt_detail: details).where.not(current_stock: 0).includes(:outgoing_receipt_detail).includes(:item)
   end
 
+  def bill
+  end
+
   private
   def report_period
     if params[:period][:type] == 'monthly'

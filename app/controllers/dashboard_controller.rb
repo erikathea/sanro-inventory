@@ -20,6 +20,13 @@ class DashboardController < ApplicationController
     end
   end
 
+  def generate_bill
+    if params[:generate]
+    else
+      flash[:report_error] = "Select a client to bill"
+    end
+  end
+
   private
   def set_report_period
     if params[:period] == 'Monthly'
