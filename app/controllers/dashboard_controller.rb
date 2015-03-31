@@ -6,23 +6,36 @@ class DashboardController < ApplicationController
   def generate_report
     if params[:report] == 'Stocks'
       redirect_to stock_report_path()
+    end
+
+    @period = set_report_period if params[:report]
+    if params[:report] == 'Delivery Inventory'
+      redirect_to delivery_report_path(period: @period)
+    elsif params[:report] == 'Delivery (DR)'
+      redirect_to dr_report_path(period: @period)
+    elsif params[:report] == 'Sale Invoice (SI)'
+      redirect_to si_report_path(period: @period)
     else
-      @period = set_report_period if params[:report]
-      if params[:report] == 'Delivery Inventory'
-        redirect_to delivery_report_path(period: @period)
-      elsif params[:report] == 'Delivery (DR)'
-        redirect_to dr_report_path(period: @period)
-      elsif params[:report] == 'Sale Invoice (SI)'
-        redirect_to si_report_path(period: @period)
-      else
-        flash[:report_error] = "Select a report type"
-      end
+      flash[:report_error] = "Select a report type"
     end
   end
 
   def generate_bill
     @clients = OutgoingReceipt.where(sale_type: 1).where.not(balance: 0).map(&:client).compact.uniq
     flash[:report_error] = @clients.present? ? "Select a Client to bill" : 'No available Client'
+  end
+
+  def archive
+    @header = params[:report]
+    if params[:report] == 'Stocks'
+      @details = File.open('data/latest-listofstocks.csv').readlines
+    elsif params[:report] == 'Delivery Inventory'
+      @details = File.open('data/delivery.csv').readlines
+    elsif params[:report] == 'Delivery (DR)'
+      @details = File.open('data/latest-dr.csv').readlines
+    elsif params[:report] == 'Sale Invoice (SI)'
+      @details = File.open('data/latest-si.csv').readlines
+    end
   end
 
   private

@@ -1,0 +1,23 @@
+%h3
+  Archive:
+  = @header
+
+%table.table.table-hover.table-responsive.reports
+  %thead
+    %tr
+      - header = @details.first.chomp.split(',')
+      - header.each do |title|
+        %th= title
+
+  %tbody
+    - (@details[1...(@details.size-1)]).each do |detail|
+      %tr
+        - detail = detail.split(',')
+        - detail.each do |data|
+          %td= data
+
+    %tfoot
+      %tr
+        - footer = @details.last.chomp.split(',')
+        - footer.each do |info|
+          %td= info
