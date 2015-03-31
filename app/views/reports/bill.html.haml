@@ -1,0 +1,59 @@
+.row-fluid
+  %h5
+    To:
+    %strong= @client
+  %h5
+    Date:
+    %strong= Date.today.strftime('%d %B %Y')
+
+%br
+
+%table.table.table-hover.table-responsive.reports
+  %thead
+    %tr
+      %th No.
+      %th Date
+      %th DR No.
+      - if @show_po_no
+        %th PO No.
+      %th
+        .pull-right Amount
+      %th
+        .pull-right Balance
+
+  %tbody
+    - @details.each_with_index do |outgoing_receipt, index|
+      %tr
+        %td= index+1
+        %td= outgoing_receipt.date_issued.strftime('%d %B %y')
+        %td= outgoing_receipt.receipt_number
+        - if @show_po_no
+          %td= outgoing_receipt.po_no
+        %td
+          .pull-right= number_with_precision(outgoing_receipt.total, precision:2)
+        %td
+          .pull-right= number_with_precision(outgoing_receipt.balance, precision:2)
+
+    %tfoot
+      %tr
+        %td
+        %td
+        - if @show_po_no
+          %td
+        %td
+          %br
+          %b Total
+        %td
+          .pull-right= number_with_precision(@details.map(&:total).sum, precision:2)
+        %td
+          %br
+          %b.pull-right
+            = style_stock(number_with_precision(@details.map(&:balance).sum, precision:2))
+
+%br
+
+.row-fluid
+  .col-md-4
+    %h5 Received by
+    _________________________
+    %h5= @client

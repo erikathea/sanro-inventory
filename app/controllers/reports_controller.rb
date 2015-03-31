@@ -23,6 +23,10 @@ class ReportsController < ApplicationController
   end
 
   def bill
+    @title = 'Billing Statement'
+    @client = params[:client]
+    @details = OutgoingReceipt.where(sale_type: 1, client: @client).where.not(balance: 0).order(:date_issued)
+    @show_po_no = @details.map(&:po_no).compact.uniq.present? ? true : false
   end
 
   private

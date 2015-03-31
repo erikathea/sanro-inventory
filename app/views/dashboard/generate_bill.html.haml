@@ -1,0 +1,10 @@
+- if @clients.present?
+  = form_tag('/bill') do
+    .field.form-group.report-type.well
+      = label_tag 'Select client'
+      = select_tag 'client', options_for_select(@clients), class: 'form-control'
+      %br
+      %p.text-info
+        Note: Clients displayed here are filtered. Only those with balance are listed.
+    .actions
+      = submit_tag 'Generate Billing Statement', class: 'glyphicon glyphicon-floppy-saved btn btn-primary'
