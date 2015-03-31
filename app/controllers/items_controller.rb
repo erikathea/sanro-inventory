@@ -75,6 +75,7 @@ class ItemsController < ApplicationController
       params.require(:item).permit(
         :description,
         :part_number,
+        :remarks,
         :selling_price,
         inventories_attributes: [
           :id,
