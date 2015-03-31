@@ -19,10 +19,13 @@
     = number_with_precision(@item.selling_price, precision:2)
 
 %p
-  %b Description:
+  %b Name:
   = @item.description
 %p
   %b Part number:
   = @item.part_number
+%p
+  %b Remarks:
+  = @item.remarks
 %br
 = render 'inventories/list', inventories: @item.inventories

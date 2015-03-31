@@ -1,8 +1,9 @@
 %table.table.table-hover.table-responsive.inventory.item
   %thead
     %tr
-      %th Description
+      %th Name
       %th Part number
+      %th Remarks
       %th Selling price
       %th Total Stock
 
@@ -11,6 +12,7 @@
       %tr
         %td= link_to item.description, item
         %td= item.part_number
+        %td= item.remarks
         %td
           .pull-right= number_with_precision(item.selling_price, precision:2)
         %td
