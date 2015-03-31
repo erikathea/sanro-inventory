@@ -12,11 +12,19 @@ class Inventory < ActiveRecord::Base
   end
 
   def up_amount
-    unit_price * outgoing_receipt_detail.qty
+    begin
+      unit_price * outgoing_receipt_detail.qty
+    rescue
+        0
+    end
   end
 
   def sp_amount
-    outgoing_receipt_detail.sp_amount
+    begin
+      outgoing_receipt_detail.sp_amount
+    rescue
+      0
+    end
   end
 
   private
