@@ -5,9 +5,9 @@
   .field.form-group.report-period.hide
     = label_tag 'Select report period'
     = select_tag 'period', options_for_select([ 'Monthly', 'Annual' ], 'Monthly'), class: 'form-control'
-  .field.form-group.date-month.hide
-    = label_tag 'Select month'
-    = date_select 'report-month', '',{discard_day: true}, class: 'form-control'
+    .field.form-group.date-month
+      = label_tag 'Select month'
+      = date_select 'report-month', '',{discard_day: true}, class: 'form-control'
   .field.form-group.date-year.hide
     = label_tag 'Select year'
     = date_select 'report-year', '',{discard_day: true, discard_month: true}, class: 'form-control'
