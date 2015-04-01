@@ -49,7 +49,7 @@ class ReportsController < ApplicationController
       @date_header = "#{params[:period][:quarter]} Quarter #{year}"
       end_month = params[:period][:quarter].to_i * 3
       start_month = end_month - 2
-      return (Date.new(year, start_month))...(Date.new(year, end_month))
+      return (Date.new(year, start_month))...(Date.new(year, end_month, -1))
     else
       @date_header = Date.new(year).strftime('%Y')
       return (Date.new(year))...(Date.new(year).next_year)
