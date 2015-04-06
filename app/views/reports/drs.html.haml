@@ -1,0 +1,54 @@
+%table.table.table-hover.table-responsive.reports
+  %thead
+    %tr
+      %th Date
+      %th Customer
+      %th Description
+      %th Part Number
+      %th DR No.
+      %th
+        .pull-right Unit Price
+      %th
+        .pull-right UP Amount
+      %th
+        .pull-right Qty
+      %th
+        .pull-right Selling Price
+      %th
+        .pull-right SP Amount
+
+  %tbody
+    - @inventories.each do |inventory|
+      %tr
+        %td= inventory.outgoing_receipt_detail.outgoing_receipt.date_issued
+        %td= inventory.outgoing_receipt_detail.outgoing_receipt.client
+        %td= inventory.item.description
+        %td= inventory.item.part_number
+        %td= inventory.outgoing_receipt_detail.outgoing_receipt.receipt_number
+        %td
+          .pull-right= number_with_precision(inventory.unit_price, precision:2)
+        %td
+          .pull-right= number_with_precision(inventory.up_amount, precision:2)
+        %td
+          .pull-right= number_with_precision(inventory.outgoing_receipt_detail.qty, precision:2)
+        %td
+          .pull-right= number_with_precision(inventory.outgoing_receipt_detail.selling_price, precision:2)
+        %td
+          .pull-right= number_with_precision(inventory.sp_amount, precision:2)
+
+    %tfoot
+      %tr
+        %td
+        %td
+        %td
+        %td
+        %td
+        %td
+          %b.pull-right Total UP
+        %td
+          %b.pull-right= style_stock(number_with_precision(@inventories.map(&:up_amount).sum, precision:2))
+        %td
+        %td
+          %b.pull-right Total SP
+        %td
+          %b.pull-right= style_stock(number_with_precision(@inventories.map(&:sp_amount).sum, precision:2))

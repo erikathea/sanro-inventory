@@ -7,7 +7,7 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
+      = link_to ' Home', root_path, class: 'navbar-brand glyphicon glyphicon-home'
     .collapse.navbar-collapse
       = render 'layouts/navigation_links'
 
@@ -17,26 +17,26 @@
       .collapse.navbar-collapse
         %ul#sub_nav.nav.navbar-nav
           %li.dropdown
-            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button", class: 'btn btn-link btn-xs'}
               %span.glyphicon.glyphicon-list-alt
                 Receipts
               %span.caret
             %ul.dropdown-menu{:role => "menu"}
               %li{:role => 'presentation'}
-                = link_to ' Delivery Inventory', incoming_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+                = link_to ' Delivery Inventory List', incoming_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
               %li{:role => 'presentation'}
                 = link_to ' Add Delivery Inventory', new_incoming_receipt_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
               %li{:role => 'presentation'}
-                = link_to ' DRs', deliveries_outgoing_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+                = link_to ' Delivery Receipt List', deliveries_outgoing_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
               %li{:role => 'presentation'}
                 = link_to ' Add DR', add_dr_new_outgoing_receipt_path,   class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
               %li{:role => 'presentation'}
-                = link_to ' SIs', sales_invoices_outgoing_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
+                = link_to ' Sale Invoice List', sales_invoices_outgoing_receipts_path, class: 'glyphicon glyphicon-list btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
               %li{:role => 'presentation'}
                 = link_to ' Add SI', add_si_new_outgoing_receipt_path,  class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs', :role => 'menuitem', :tabindex => '-1'
 
           %li.dropdown
-            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button", class: 'btn btn-link btn-xs'}
               %span.glyphicon.glyphicon-briefcase
                 Inventory
               %span.caret
@@ -46,5 +46,9 @@
               %li{:role => 'presentation'}
                 = link_to ' New Inventory Item', new_item_path, class: 'glyphicon glyphicon-plus-sign btn btn-link btn-xs'
 
-          %li.pull-left
+          %li
             = link_to ' Reports', generate_report_path, class: 'glyphicon glyphicon-book btn btn-link btn-xs'
+          %li
+            = link_to ' Billing Statement', generate_bill_path, class: 'glyphicon glyphicon-credit-card btn btn-link btn-xs'
+          %li
+            = link_to ' Archive', archive_path, class: 'glyphicon glyphicon-folder-close btn btn-link btn-xs'

@@ -75,6 +75,7 @@ class OutgoingReceiptsController < ApplicationController
     def outgoing_receipt_params
       params.require(:outgoing_receipt).permit(
         :receipt_number,
+        :po_no,
         :client,
         :address,
         :date_issued,

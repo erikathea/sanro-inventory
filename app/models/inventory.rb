@@ -11,6 +11,22 @@ class Inventory < ActiveRecord::Base
     unit_price * current_stock
   end
 
+  def up_amount
+    begin
+      unit_price * outgoing_receipt_detail.qty
+    rescue
+        0
+    end
+  end
+
+  def sp_amount
+    begin
+      outgoing_receipt_detail.sp_amount
+    rescue
+      0
+    end
+  end
+
   private
   def set_initial_stock_count
     self.initial_stock = self.current_stock if !self.outgoing_receipt_detail

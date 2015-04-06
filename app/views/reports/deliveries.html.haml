@@ -1,0 +1,41 @@
+%table.table.table-hover.table-responsive
+  %thead
+    %tr
+      %th Date
+      %th Supplier
+      %th Description
+      %th Part Number
+      %th Receipt No.
+      %th
+        .pull-right Input Qty
+      %th
+        .pull-right Unit Price
+      %th
+        .pull-right Amount
+
+
+  %tbody
+    - @details.each do |detail|
+      %tr
+        %td= detail.incoming_receipt.date_issued
+        %td= detail.incoming_receipt.supplier
+        %td= detail.description
+        %td= detail.part_number
+        %td= detail.incoming_receipt.receipt_number
+        %td
+          .pull-right= number_with_precision(detail.qty, precision:2)
+        %td
+          .pull-right= number_with_precision(detail.unit_price, precision:2)
+        %td
+          %b.pull-right= style_stock(number_with_precision(detail.total, precision:2))
+    %tr
+      %td
+      %td
+      %td
+      %td
+      %td
+      %td
+      %td
+        %b.pull-right Total
+      %td
+        %b.pull-right= style_stock(number_with_precision(@details.map(&:total).sum, precision:2))

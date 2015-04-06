@@ -28,10 +28,17 @@ Rails.application.routes.draw do
 
   get 'generate_report' => 'dashboard#generate_report'
   post 'generate_report' => 'dashboard#generate_report'
+  get 'generate_bill' => 'dashboard#generate_bill'
+  get 'archive' => 'dashboard#archive'
+  post 'archive' => 'dashboard#archive'
+
   get 'stock_report' => 'reports#stocks'
   get 'delivery_report' => 'reports#deliveries'
   get 'si_report' => 'reports#sis'
   get 'dr_report' => 'reports#drs'
+  get 'bill' => 'reports#bill'
+  post 'bill' => 'reports#bill'
+
   root 'dashboard#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

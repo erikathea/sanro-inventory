@@ -7,11 +7,14 @@
           %li= msg
 
   .field.form-group
-    = f.label :description
+    = f.label :description, 'Name'
     = f.text_field :description, class: 'form-control'
   .field.form-group
     = f.label :part_number
     = f.text_field :part_number, class: 'form-control'
+  .field.form-group
+    = f.label :remarks
+    = f.text_field :remarks, class: 'form-control'
   .field.form-group
     = f.label :selling_price, 'SRP'
     = f.text_field :selling_price, class: 'form-control'

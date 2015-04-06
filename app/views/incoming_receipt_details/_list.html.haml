@@ -1,7 +1,7 @@
 %table.table.table-hover.table-responsive.receipt#incoming
   %thead
     %tr
-      %th Description
+      %th Name
       %th Part number
       %th Qty
       %th Unit
@@ -11,7 +11,8 @@
   %tbody
     - incoming_receipt_details.each do |incoming_receipt_detail|
       %tr
-        %td= incoming_receipt_detail.description
+        - item = Item.where(description: incoming_receipt_detail.description, part_number: incoming_receipt_detail.part_number).first
+        %td= link_to incoming_receipt_detail.description, item_path(item)
         %td= incoming_receipt_detail.part_number
         %td= number_with_precision(incoming_receipt_detail.qty, precision:2)
         %td= incoming_receipt_detail.unit

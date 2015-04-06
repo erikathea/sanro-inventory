@@ -1,0 +1,10 @@
+- unless @details
+  = form_tag('/archive') do
+    .field.form-group.report-type
+      = label_tag 'Select archive type'
+      = select_tag 'report', options_for_select([ 'Stocks', 'Delivery Inventory', 'Delivery (DR)', 'Sale Invoice (SI)' ], 'Stocks'), class: 'form-control'
+    .actions
+      = submit_tag 'View Archive', class: 'glyphicon glyphicon-floppy-saved btn btn-primary'
+
+- if @details
+  = render 'archive/data'
