@@ -8,7 +8,11 @@ class Inventory < ActiveRecord::Base
   before_create :set_initial_stock_count
 
   def unit_price_amount
-    unit_price * current_stock
+    begin
+      unit_price * current_stock
+    rescue
+      0
+    end
   end
 
   def up_amount
