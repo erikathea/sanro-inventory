@@ -19,6 +19,9 @@
           .field.form-group.selling-price.price
             = f.label :selling_price
             = f.number_field :selling_price, class: 'form-control', step: 1
+          .div.pull-right
+            Unit Price:
+            %span.unit-price 0.00
         %td
           .field.form-group.total
             = f.label :total

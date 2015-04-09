@@ -15,6 +15,10 @@ class Item < ActiveRecord::Base
     "#{description} - #{part_number}" if self.description.present? && self.part_number.present?
   end
 
+  def unit_price
+    self.inventories.where('current_stock > 0').first
+  end
+
   private
   def item_already_exists?
     item = Item.find_by_description_and_part_number(self.description, self.part_number)

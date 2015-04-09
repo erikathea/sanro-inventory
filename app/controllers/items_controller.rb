@@ -72,6 +72,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def getUnitPrice
+    @item = Item.find(params[:id])
+    respond_to do |format|
+      format.json{ render json: @item.unit_price }
+    end
+  end
+
   private
     def set_item
       @item = Item.includes(:inventories).find(params[:id])

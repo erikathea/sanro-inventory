@@ -132,7 +132,14 @@ ready  = ->
           updater: (item) ->
             el_item = this.$element.parent().find('.hidden-item-id')[0]
             el_item.value = item.split('|')[1]
-            return item
+
+            $.ajax({
+              url: '/items/'+item.split('|')[1]+'/getUnitPrice',
+              success: (result) ->
+                $(detail.find('span.unit-price')).text(result.unit_price)
+            })
+
+            return item.split('|')[0]
           allowNew: false
         return
       return
