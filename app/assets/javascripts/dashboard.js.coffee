@@ -52,6 +52,15 @@ ready  = ->
     $('.new_receipt').on('cocoon:before-insert', (e, detail) ->
       ### calculate receipt_detail total ###
       $qty_input = $(detail.find('div.qty input'))
+      $qty_input.on('focusin', ->
+        tag_input = $($(detail).find('input.hidden-item-id')).val()
+        $.ajax({
+          url: '/items/'+tag_input+'/getStock',
+          success: (result) ->
+            $(detail.find('div.qty input')).val(result)
+        })
+        return
+      )
       $qty_input.on('focusout', ->
         $row = $(this).parents().closest('tr')
         $total = $row.find('div.total input')[0]
@@ -126,7 +135,6 @@ ready  = ->
             return item
           allowNew: false
         return
-
       return
     )
 

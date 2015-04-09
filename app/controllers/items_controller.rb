@@ -65,6 +65,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def getStock
+    @item = Item.includes(:inventories).find(params[:id])
+    respond_to do |format|
+      format.json{ render json: @item.total_stock }
+    end
+  end
+
   private
     def set_item
       @item = Item.includes(:inventories).find(params[:id])
