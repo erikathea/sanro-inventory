@@ -42,7 +42,7 @@ ready  = ->
   )
 
   ### receipt form elements start ###
-  if window.location.pathname.match(/.*receipt.*new.*/)
+  if (window.location.pathname.match(/.*receipt.*(new|edit).*/))
     ### datepicker - add/update receipt form ###
     $('.receipt_date_issued').datepicker(
        dateFormat: "dd/mm/yy"
