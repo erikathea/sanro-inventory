@@ -10,7 +10,7 @@
         %td.width-15
           .field.form-group.qty
             = f.label :qty
-            = f.number_field :qty, min: 1, class: 'form-control', step: 0.01
+            = f.number_field :qty, min: 1, class: 'form-control', step: 1
         %td.width-10
           .field.form-group
             = f.label :unit
@@ -18,7 +18,10 @@
         %td.width-15
           .field.form-group.selling-price.price
             = f.label :selling_price
-            = f.number_field :selling_price, class: 'form-control', step: 0.01
+            = f.number_field :selling_price, class: 'form-control', step: 1
+          .div.pull-right
+            Unit Price:
+            %span.unit-price 0.00
         %td
           .field.form-group.total
             = f.label :total

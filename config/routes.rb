@@ -22,6 +22,10 @@ Rails.application.routes.draw do
       get 'part_numbers'
       get 'ajaxList'
     end
+    member do
+      get 'getStock'
+      get 'getUnitPrice'
+    end
   end
 
   devise_for :users

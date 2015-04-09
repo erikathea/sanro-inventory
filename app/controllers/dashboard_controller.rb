@@ -21,7 +21,7 @@ class DashboardController < ApplicationController
   end
 
   def generate_bill
-    @clients = OutgoingReceipt.where(sale_type: 1).where.not(balance: 0).map(&:client).compact.uniq
+    @clients = OutgoingReceipt.where('balance > 0').map(&:client).compact.uniq
     flash[:report_error] = @clients.present? ? "Select a Client to bill" : 'No available Client'
   end
 

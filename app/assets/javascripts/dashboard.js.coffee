@@ -42,7 +42,7 @@ ready  = ->
   )
 
   ### receipt form elements start ###
-  if window.location.pathname.match(/.*receipt.*new.*/)
+  if (window.location.pathname.match(/.*receipt.*(new|edit).*/))
     ### datepicker - add/update receipt form ###
     $('.receipt_date_issued').datepicker(
        dateFormat: "dd/mm/yy"
@@ -52,6 +52,15 @@ ready  = ->
     $('.new_receipt').on('cocoon:before-insert', (e, detail) ->
       ### calculate receipt_detail total ###
       $qty_input = $(detail.find('div.qty input'))
+      $qty_input.on('focusin', ->
+        tag_input = $($(detail).find('input.hidden-item-id')).val()
+        $.ajax({
+          url: '/items/'+tag_input+'/getStock',
+          success: (result) ->
+            $(detail.find('div.qty input')).val(result)
+        })
+        return
+      )
       $qty_input.on('focusout', ->
         $row = $(this).parents().closest('tr')
         $total = $row.find('div.total input')[0]
@@ -123,10 +132,16 @@ ready  = ->
           updater: (item) ->
             el_item = this.$element.parent().find('.hidden-item-id')[0]
             el_item.value = item.split('|')[1]
-            return item
+
+            $.ajax({
+              url: '/items/'+item.split('|')[1]+'/getUnitPrice',
+              success: (result) ->
+                $(detail.find('span.unit-price')).text(result.unit_price)
+            })
+
+            return item.split('|')[0]
           allowNew: false
         return
-
       return
     )
 
