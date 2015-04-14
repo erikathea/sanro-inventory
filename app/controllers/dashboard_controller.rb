@@ -16,13 +16,13 @@ class DashboardController < ApplicationController
     elsif params[:report] == 'Sale Invoice (SI)'
       redirect_to si_report_path(period: @period)
     else
-      flash[:report_error] = "Select a report type"
+      flash[:report_error] = 'Select a report type'
     end
   end
 
   def generate_bill
     @clients = OutgoingReceipt.where('balance > 0').map(&:client).compact.uniq
-    flash[:report_error] = @clients.present? ? "Select a Client to bill" : 'No available Client'
+    flash[:report_error] = @clients.present? ? 'Select a Client to bill' : 'No available Client'
   end
 
   def archive

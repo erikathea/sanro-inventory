@@ -1,10 +1,19 @@
 - if @clients.present?
   = form_tag('/bill') do
-    .field.form-group.report-type.well
-      = label_tag 'Select client'
-      = select_tag 'client', options_for_select(@clients), class: 'form-control'
-      %br
-      %p.text-info
-        Note: Clients displayed here are filtered. Only those with balance are listed.
-    .actions
-      = submit_tag 'Generate Billing Statement', class: 'glyphicon glyphicon-floppy-saved btn btn-primary'
+    .report-type.well
+      .field.form-group
+        = label_tag 'Select client'
+        = select_tag 'client', options_for_select(@clients), class: 'form-control'
+        %br
+        %p.text-info
+          Note: Clients displayed here are filtered. Only those with balance are listed.
+      .field.form-group
+        .col-xs-6
+          = label_tag 'Start date'
+          = text_field_tag 'start_date', '', class: 'form-control bill_date'
+        .col-xs-6
+          = label_tag 'End date'
+          = text_field_tag 'end_date', '',class: 'form-control bill_date'
+        .clear
+      .actions
+        = submit_tag 'Generate Billing Statement', class: 'glyphicon glyphicon-floppy-saved btn btn-primary'

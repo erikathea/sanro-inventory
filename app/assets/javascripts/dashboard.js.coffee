@@ -41,6 +41,12 @@ ready  = ->
     return
   )
 
+  if window.location.pathname.match(/.*generate.*bill.*/)
+    ### datepicker - add/update generate bill form ###
+    $('.bill_date').datepicker(
+      dateFormat: "dd/mm/yy"
+    )
+
   ### receipt form elements start ###
   if (window.location.pathname.match(/.*receipt.*(new|edit).*/))
     ### datepicker - add/update receipt form ###

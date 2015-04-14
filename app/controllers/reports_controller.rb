@@ -25,9 +25,17 @@ class ReportsController < ApplicationController
   end
 
   def bill
+    if params[:start_date].empty? || params[:end_date].empty?
+      flash[:period_error] = 'Select billing period'
+      redirect_to generate_bill_path
+    end
+
     @title = 'Billing Statement'
     @client = params[:client]
-    @details = OutgoingReceipt.where(client: @client).where('balance > 0').order(:date_issued)
+    @start_date = params[:start_date].to_date
+    @end_date = params[:end_date].to_date
+    @date_range = @start_date..@end_date
+    @details = OutgoingReceipt.where(client: @client, date_issued: @date_range).where('balance > 0').order(:date_issued)
     @show_po_no = @details.map(&:po_no).compact.uniq.present? ? true : false
   end
 
