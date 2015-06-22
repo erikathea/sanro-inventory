@@ -8,6 +8,10 @@
             = f.text_field :item, value: f.object.item ? f.object.item.full_description : '', class: 'form-control select-inventory-item', placeholder: 'Select inventory item'
             = f.hidden_field :item_id, class: 'hidden-item-id'
         %td.width-15
+          .field.form-group.unit-price
+            = f.label :unit_price
+            = f.number_field :unit_price, class: 'form-control', step: 1
+        %td.width-15
           .field.form-group.qty
             = f.label :qty
             = f.number_field :qty, min: 1, class: 'form-control', step: 1
@@ -19,7 +23,7 @@
           .field.form-group.selling-price.price
             = f.label :selling_price
             = f.number_field :selling_price, class: 'form-control', step: 1
-          .div.pull-right
+          .div.pull-right.hidden
             Unit Price:
             %span.unit-price 0.00
         %td

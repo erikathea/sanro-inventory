@@ -26,7 +26,7 @@
         %td= inventory.item.part_number
         %td= inventory.outgoing_receipt_detail.outgoing_receipt.receipt_number
         %td
-          .pull-right= number_with_precision(inventory.unit_price, precision:2)
+          .pull-right= number_with_precision(inventory.outgoing_receipt_detail.unit_price, precision:2)
         %td
           .pull-right= number_with_precision(inventory.up_amount, precision:2)
         %td

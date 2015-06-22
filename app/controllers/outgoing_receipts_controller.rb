@@ -90,6 +90,7 @@ class OutgoingReceiptsController < ApplicationController
           :qty,
           :unit,
           :selling_price,
+          :unit_price,
           :item_id
         ]
       )
