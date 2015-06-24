@@ -108,6 +108,7 @@ ready  = ->
           hint: true
           source: data
           allowNew: true
+          items: 25
         return
 
       $part_number = $(detail.find('div.part-number input'))
@@ -122,6 +123,7 @@ ready  = ->
             hint: true
             source: data
             allowNew: true
+            items: 25
           return
         return
       )
@@ -135,6 +137,7 @@ ready  = ->
           highlight: true
           hint: true
           source: data
+          items: 25
           updater: (item) ->
             el_item = this.$element.parent().find('.hidden-item-id')[0]
             el_item.value = item.split('|')[1]
@@ -206,6 +209,7 @@ ready  = ->
         hint: true
         source: data
         allowNew: true
+        items: 25
       return
 
     $part_number = $('.new_receipt .nested-fields div.part-number input')
@@ -220,6 +224,7 @@ ready  = ->
           hint: true
           source: data
           allowNew: true
+          items: 25
         return
       return
     )
@@ -232,6 +237,7 @@ ready  = ->
         displayKey: 'value'
         highlight: true
         hint: true
+        items: 25
         source: data
         updater: (item) ->
           el_item = this.$element.parent().find('.hidden-item-id')[0]
