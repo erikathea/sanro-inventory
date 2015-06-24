@@ -10,7 +10,7 @@
         %td.width-15
           .field.form-group.qty
             = f.label :qty
-            = f.number_field :qty, min: 1, class: 'form-control', step: 1
+            = f.number_field :qty, min: 0, class: 'form-control', step: 0.01
         %td.width-10
           .field.form-group
             = f.label :unit
