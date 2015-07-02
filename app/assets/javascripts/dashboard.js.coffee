@@ -245,6 +245,13 @@ ready  = ->
           return item
         allowNew: false
       return
+
+  $('.new_receipt').on('cocoon:before-remove', (e, detail) ->
+    $total_input = $(detail.find('div.total input'))
+    $total_input.val(0);
+    $('.new_receipt div.receipt-total input').trigger('change')
+    return
+  )
   ### receipt form elements end ###
 
   ### report form elements start ###
