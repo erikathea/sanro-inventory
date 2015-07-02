@@ -5,16 +5,12 @@
         %td
           .field.form-group.inventory-id.inventory-item
             = f.label 'Inventory Item'
-            = f.text_field :item, value: f.object.item ? f.object.item.full_description : '', class: 'form-control select-inventory-item', placeholder: 'Select inventory item'
+            = f.text_field :item, value: f.object.item ? f.object.item.full_description : '', class: 'form-control select-inventory-item', placeholder: 'Select inventory item', disabled: f.object.id ? true : false
             = f.hidden_field :item_id, class: 'hidden-item-id'
-        %td.width-15
-          .field.form-group.unit-price
-            = f.label :unit_price
-            = f.number_field :unit_price, class: 'form-control', step: 1
         %td.width-15
           .field.form-group.qty
             = f.label :qty
-            = f.number_field :qty, min: 0, class: 'form-control', step: 0.01
+            = f.number_field :qty, min: 0, class: 'form-control', step: 0.01, disabled: f.object.id ? true : false
         %td.width-10
           .field.form-group
             = f.label :unit
@@ -23,9 +19,13 @@
           .field.form-group.selling-price.price
             = f.label :selling_price
             = f.number_field :selling_price, class: 'form-control', step: 0.01
-          .div.pull-right.hidden
+          .div.pull-right
             Unit Price:
-            %span.unit-price 0.00
+            %span.unit-price
+              - if f.object.inventory.present?
+                = f.object.inventory.unit_price
+              - else
+                0.00
         %td
           .field.form-group.total
             = f.label :total

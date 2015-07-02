@@ -5,15 +5,15 @@
         %td
           .field.form-group.description
             = f.label :description
-            = f.text_field :description, class: 'form-control', placeholder: 'DESCRIPTION'
+            = f.text_field :description, class: 'form-control', placeholder: 'DESCRIPTION', disabled: f.object.id ? true : false
         %td
           .field.form-group.part-number
             = f.label :part_number
-            = f.text_field :part_number, class: 'form-control', placeholder: 'PART NO'
+            = f.text_field :part_number, class: 'form-control', placeholder: 'PART NO', disabled: f.object.id ? true : false
         %td.width-10
           .field.form-group.qty
             = f.label :qty
-            = f.number_field :qty, min: 0, class: 'form-control', step: 0.01
+            = f.number_field :qty, min: 0, class: 'form-control', step: 0.01, disabled: f.object.id ? true : false
         %td.width-10
           .field.form-group
             = f.label :unit
