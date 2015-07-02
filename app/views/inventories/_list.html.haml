@@ -7,7 +7,7 @@
       %th Unit Price
       %th Selling Price
       %th Current Stock
-      /%th Initial Stock
+      %th Initial Stock
 
   %tbody
     - inventories.each do |inventory|
@@ -21,10 +21,7 @@
             = link_to inventory.outgoing_receipt_detail.outgoing_receipt.receipt_number, outgoing_receipt_path(inventory.outgoing_receipt_detail.outgoing_receipt)
         %td
           .pull-right
-            - if inventory.outgoing_receipt_detail
-              %b.text-info= number_with_precision(inventory.outgoing_receipt_detail.unit_price, precision:2)
-            - else
-              = number_with_precision(inventory.unit_price, precision:2)
+            = number_with_precision(inventory.unit_price, precision:2)
         %td
           .pull-right
             - if inventory.incoming_receipt_detail.present?
@@ -34,5 +31,5 @@
         %td
           .pull-right
             %b= style_stock(inventory.current_stock)
-        /%td
-        /  .pull-right= number_with_precision(inventory.initial_stock, precision:2)
+        %td
+          .pull-right= number_with_precision(inventory.initial_stock, precision:2)
