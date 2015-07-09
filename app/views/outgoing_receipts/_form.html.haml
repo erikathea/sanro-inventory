@@ -39,4 +39,4 @@
 
   .actions
     = f.hidden_field :sale_type
-    = f.submit "Save #{@outgoing_receipt.type_title}", class: 'glyphicon glyphicon-floppy-saved btn btn-primary'
+    = f.submit "Save #{@outgoing_receipt.type_title}", class: 'glyphicon glyphicon-floppy-saved btn btn-primary', data: { confirm: 'Saving receipt. Are you sure?'}

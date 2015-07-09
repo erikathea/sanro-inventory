@@ -1,7 +1,7 @@
 class OutgoingReceiptDetail < ActiveRecord::Base
   belongs_to :outgoing_receipt
   belongs_to :item
-  has_one :inventory
+  has_many :inventories
 
   validates :selling_price, presence: true
   # validates :unit_price, presence: true
@@ -12,15 +12,21 @@ class OutgoingReceiptDetail < ActiveRecord::Base
 
   after_create :update_inventory_upon_create
   before_update :update_inventory_upon_update
-  before_destroy :destroy_inventory
+  before_destroy :return_stock_to_parent_inventory
 
   def sp_amount
     qty * selling_price
   end
 
   private
-  def destroy_inventory
-    self.inventory.destroy
+
+  def return_stock_to_parent_inventory
+    self.inventories.each do |inventory|
+      parent_inventory = inventory.inventory
+      stock = parent_inventory.current_stock + (- inventory.current_stock)
+      parent_inventory.update(current_stock: stock)
+      inventory.destroy
+    end
   end
 
   def has_item?
@@ -51,7 +57,7 @@ class OutgoingReceiptDetail < ActiveRecord::Base
     inventories = Inventory.order(:id).where("item_id = #{item.id} AND current_stock > 0")
     inventory = inventories.first
     if new_qty < inventory.current_stock
-      create_inventory((new_qty), inventory.unit_price, inventory)
+      create_inventory((- new_qty), inventory.unit_price, inventory)
       stock = inventory.current_stock - new_qty
       inventory.update_attributes(current_stock: stock)
     else

@@ -22,8 +22,10 @@
           .div.pull-right
             Unit Price:
             %span.unit-price
-              - if f.object.inventory.present?
-                = f.object.inventory.unit_price
+              - if f.object.inventories.present?
+                - f.object.inventories.each do |inventory|
+                  = inventory.unit_price
+                  (#{ - inventory.current_stock })
               - else
                 0.00
         %td
