@@ -18,6 +18,11 @@ class OutgoingReceiptDetail < ActiveRecord::Base
     qty * selling_price
   end
 
+  def recreate_inventories
+    self.inventories.each do |i| i.destroy end
+    update_inventory_upon_create
+  end
+
   private
 
   def return_stock_to_parent_inventory

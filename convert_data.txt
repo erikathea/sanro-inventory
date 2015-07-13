@@ -21,3 +21,85 @@ b.each do |info|
 end
 
 target = File.write('db/seeds.rb', content)
+
+-----
+
+# delete test brand
+test = Inventory.where(item_id: 4053)
+test.each do |i|
+  if i.initial_stock.present?
+    i.destroy
+  end
+  if i.incoming_receipt_detail.present?
+    i.incoming_receipt_detail.incoming_receipt.destroy
+  end
+  if i.outgoing_receipt_detail.present?
+    i.outgoing_receipt_detail.outgoing_receipt.destroy
+  end
+end
+test.destroy
+###
+
+
+# item 2032 is moved to 4011
+od = OutgoingReceiptDetail.where(item_id:2032)
+od.each do |o| o.update(item_id:4011) end
+
+### initial stock issue
+# item 41
+Inventory.find(4003).update(initial_stock:3)
+
+# item 1314
+Inventory.find(7190).update(initial_stock:10)
+
+# item 1594
+Inventory.find(5818).update(initial_stock:34)
+
+# item 1596
+Inventory.find(5815).update(initial_stock: 24)
+
+# item 1609
+Inventory.find(5834).update(initial_stock:2)
+
+# item 1620
+Inventory.find(5039).update(initial_stock: 1)
+
+# item 2679
+Inventory.create(item_id: 2679, initial_stock:4, unit_price:2600.00, current_stock:4)
+
+# item 2799 silicon gasket black
+Inventory.find(6822).update(initial_stock:23)
+
+# item 3042 torque rod bolt - 079
+Inventory.find(6550).update(initial_stock:17)
+
+# item 3085
+Inventory.find(6592).update(initial_stock:15)
+
+# item 3449
+Inventory.find(4040).update(initial_stock:7)
+
+# item 3521
+Inventory.find(8776).update(initial_stock:2)
+
+
+
+### update inventory count
+inventories = Inventory.where.not(initial_stock:nil).order(:id)
+inventories.each do |i| i.update(current_stock: i.initial_stock) end
+
+items=Item.all.order(:id)
+error = []
+items.each do |i|
+  begin
+    details = OutgoingReceiptDetail.where(item_id: i.id)
+    details.each do |d| d.recreate_inventories end
+  rescue
+    error << i.id
+  end
+end
+
+
+# note: last inventory id 15788
+
+
