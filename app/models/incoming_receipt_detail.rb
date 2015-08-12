@@ -1,5 +1,6 @@
 class IncomingReceiptDetail < ActiveRecord::Base
   belongs_to :incoming_receipt
+  has_one :merge_transaction, as: :mergeable
 
   validates :description, presence: :true
   validates :part_number, presence: :true
@@ -51,7 +52,7 @@ class IncomingReceiptDetail < ActiveRecord::Base
 
   def get_item
     item = Item.find_by_description_and_part_number(self.description, self.part_number)
-    if !item
+    unless item
       item = Item.new(description: self.description, part_number: self.part_number)
       item.save
     end

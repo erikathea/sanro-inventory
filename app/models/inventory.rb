@@ -3,6 +3,7 @@ class Inventory < ActiveRecord::Base
   belongs_to :inventory
   belongs_to :incoming_receipt_detail
   belongs_to :outgoing_receipt_detail
+  has_one :merge_transaction, as: :mergeable
   validates :unit_price, presence: :true, if: "incoming_receipt_detail.present?"
   validates :current_stock, presence: :true
   before_create :set_initial_stock_count

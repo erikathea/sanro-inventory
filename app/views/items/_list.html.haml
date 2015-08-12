@@ -10,7 +10,9 @@
   %tbody
     - @items.each do |item|
       %tr
-        %td= link_to item.description, item
+        %td
+          = check_box_tag 'merge', item.id
+          = link_to item.description, item
         %td= item.part_number
         %td= item.remarks
         %td
@@ -18,3 +20,4 @@
         %td
           .pull-right.text-success
             %b= number_with_precision(item.total_stock, precision:2)
+

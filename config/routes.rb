@@ -21,10 +21,12 @@ Rails.application.routes.draw do
       get 'descriptions'
       get 'part_numbers'
       get 'ajaxList'
+      get 'merging'
     end
     member do
       get 'getStock'
       get 'getUnitPrice'
+      put 'merge'
     end
   end
 

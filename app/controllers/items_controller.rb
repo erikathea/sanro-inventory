@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :merge]
   helper InventoriesHelper
   respond_to :html
 
@@ -77,6 +77,50 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.json{ render json: @item.unit_price }
     end
+  end
+
+  def merging
+    @items = []
+    params[:items].split(',').sort().each do |id|
+      @items << Item.find(id).clone
+    end
+
+    @merged = Item.merge_preview(@items)
+    respond_with(@items)
+  end
+
+  def merge
+    # TODO: clean params[:items]
+    # mass update is faster with raw sql
+    remarks = ""
+    params[:items].each do |id|
+      item = Item.find(id)
+      item.update(remarks: "Merged to #{@item.description} - #{@item.part_number}(#{@item.id})", description: "MERGED[#{item.description}]")
+      remarks += " Merged: #{item.description} - #{item.part_number}(#{id}); "
+
+      merge_item = MergeItem.create(from: id, to: @item.id)
+      ids = Inventory.where(item_id: id).map(&:id)
+      ids.each do |obj_id|
+        MergeTransaction.connection.execute "INSERT INTO merge_transactions(mergeable_id, mergeable_type, merge_item_id, created_at, updated_at) VALUES (#{obj_id}, 'Inventory', #{merge_item.id}, '#{DateTime.now.to_s(:db)}', '#{DateTime.now.to_s(:db)}')"
+      end
+
+      ids = OutgoingReceiptDetail.where(item_id: id).map(&:id)
+      ids.each do |obj_id|
+        MergeTransaction.connection.execute "INSERT INTO merge_transactions(mergeable_id, mergeable_type, merge_item_id, created_at, updated_at) VALUES (#{obj_id}, 'OutgoingReceiptDetail', #{merge_item.id}, '#{DateTime.now.to_s(:db)}', '#{DateTime.now.to_s(:db)}')"
+      end
+
+      ids = IncomingReceiptDetail.where(description: item.description, part_number: item.part_number).map(&:id)
+      ids.each do |obj_id|
+        MergeTransaction.connection.execute "INSERT INTO merge_transactions(mergeable_id, mergeable_type, merge_item_id, created_at, updated_at) VALUES (#{obj_id}, 'IncomingReceiptDetail', #{merge_item.id}, '#{DateTime.now.to_s(:db)}', '#{DateTime.now.to_s(:db)}')"
+      end
+
+      Inventory.connection.execute "UPDATE inventories SET item_id = #{@item.id} where item_id = #{id}"
+      OutgoingReceiptDetail.connection.execute "UPDATE outgoing_receipt_details SET item_id = #{@item.id} where item_id = #{id}"
+      IncomingReceiptDetail.connection.execute "UPDATE incoming_receipt_details SET description = '#{@item.description}', part_number = '#{@item.part_number}' where description = '#{item.description}' AND part_number = '#{item.part_number}'"
+    end
+
+    @item.update(remarks: "#{@item.remarks}; #{remarks}")
+    respond_with(@item)
   end
 
   private

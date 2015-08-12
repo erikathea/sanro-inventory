@@ -285,6 +285,17 @@ ready  = ->
   )
   ### report form elements end ###
 
+  ### merge item start ###
+  $('#item_merge').on('click', ->
+    items = []
+    $('input#merge:checked').each( (index)->
+      items.push(this.value)
+    )
+    console.log('TODO ' + items);
+    window.location = "/items/merging?items=" + items;
+  )
+  ### merge item end ###
+
   return
 
 $(document).ready(ready)

@@ -2,6 +2,7 @@ class OutgoingReceiptDetail < ActiveRecord::Base
   belongs_to :outgoing_receipt
   belongs_to :item
   has_many :inventories
+  has_one :merge_transaction, as: :mergeable
 
   validates :selling_price, presence: true
   # validates :unit_price, presence: true

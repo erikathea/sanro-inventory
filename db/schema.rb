@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622020556) do
+ActiveRecord::Schema.define(version: 20150812072355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,24 @@ ActiveRecord::Schema.define(version: 20150622020556) do
     t.datetime "updated_at"
     t.string   "remarks"
   end
+
+  create_table "merge_items", force: true do |t|
+    t.integer  "from"
+    t.integer  "to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "merge_transactions", force: true do |t|
+    t.integer  "merge_item_id"
+    t.integer  "mergeable_id"
+    t.string   "mergeable_type"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "merge_transactions", ["merge_item_id"], name: "index_merge_transactions_on_merge_item_id", using: :btree
+  add_index "merge_transactions", ["mergeable_id", "mergeable_type"], name: "index_merge_transactions_on_mergeable_id_and_mergeable_type", using: :btree
 
   create_table "outgoing_receipt_details", force: true do |t|
     t.integer  "outgoing_receipt_id"

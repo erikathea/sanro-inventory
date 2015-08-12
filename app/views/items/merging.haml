@@ -1,0 +1,39 @@
+.container
+  %h3 Merging Items
+
+  .alert.alert-danger
+    %span Are you sure that you want to merge the following items?
+    %button.btn.btn-success.btn-xs{'data-target' => '#mergeModal', 'data-toggle' => 'modal', :type => 'button'} Merge
+    =link_to 'Cancel', items_path, class: 'btn btn-default btn-xs'
+
+- @items.each do |item|
+  .col-md-6
+    .well
+      %h4
+        #{item.description} - #{item.part_number}
+        %span.pull-right
+          Total Stock:
+          = number_with_precision(item.total_stock, precision:2)
+      .row
+        = render 'inventories/list', inventories: item.inventories
+
+#mergeModal.modal.fade{"aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4#myModalLabel.modal-title Preview Merging
+      .modal-body
+        %h4
+          #{@merged[:item].description} - #{@merged[:item].part_number}
+          %span.pull-right
+            Total Stock:
+            = number_with_precision(@merged[:total_stock], precision:2)
+        %p= @merged[:remarks]
+        = render 'inventories/list', inventories: @merged[:inventories]
+      .modal-footer
+        .row.alert.alert-success
+          %span Continue merging items?
+          %button.btn.btn-default.btn-xs{"data-dismiss" => "modal", :type => "button"} Close
+          =link_to 'Merge', merge_item_path(id: @merged[:item].id, items:@items[1..-1].map(&:id)),class: 'btn btn-success btn-xs', method: 'put'

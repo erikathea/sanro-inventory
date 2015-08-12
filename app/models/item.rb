@@ -19,6 +19,24 @@ class Item < ActiveRecord::Base
     self.inventories.where('current_stock > 0').first
   end
 
+  def self.merge_preview(items)
+    total_stock = 0
+    inventories = []
+    remarks = ""
+    items.each do |item|
+      total_stock += item.total_stock.to_f
+      remarks = "#{remarks};Merged #{item.description} - #{item.part_number} (#{item.id})"
+      inventories << item.inventories
+    end
+    {item: items.first, inventories: inventories.flatten, total_stock: total_stock, remarks: remarks}
+  end
+
+  def merge(items)
+  end
+
+  def unmerge
+  end
+
   private
   def item_already_exists?
     item = Item.find_by_description_and_part_number(self.description, self.part_number)

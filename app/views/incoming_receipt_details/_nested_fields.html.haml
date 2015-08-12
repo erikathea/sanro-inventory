@@ -4,8 +4,8 @@
       %tr
         %td
           .field.form-group.description
-            = f.label :description
-            = f.text_field :description, class: 'form-control', placeholder: 'DESCRIPTION', disabled: f.object.id ? true : false
+            = f.label :description, 'Name'
+            = f.text_field :description, class: 'form-control', placeholder: 'ITEM NAME', disabled: f.object.id ? true : false
         %td
           .field.form-group.part-number
             = f.label :part_number
