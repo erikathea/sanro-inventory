@@ -20,9 +20,9 @@
       - if @show_po_no
         %th PO No.
       %th
-        .pull-right Amount
+        .pull-right Plate no
       %th
-        .pull-right Balance
+        .pull-right Amount
 
   %tbody
     - @details.each_with_index do |outgoing_receipt, index|
@@ -36,9 +36,9 @@
         - if @show_po_no
           %td= outgoing_receipt.po_no
         %td
-          .pull-right= number_with_precision(outgoing_receipt.total, precision:2)
+          outgoing_receipt.plate_no
         %td
-          .pull-right= number_with_precision(outgoing_receipt.balance, precision:2)
+          .pull-right= number_with_precision(outgoing_receipt.total, precision:2)
 
     %tfoot
       %tr

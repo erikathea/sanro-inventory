@@ -40,7 +40,7 @@ class OutgoingReceiptDetail < ActiveRecord::Base
   end
 
   def has_stock?
-    errors.add(:item, 'has insufficient stock') if self.qty > self.item.total_stock
+    errors.add(:item, 'has insufficient stock') if (!self.item.total_stock ) || (self.qty > self.item.total_stock)
   end
 
   def has_enough_stock?
