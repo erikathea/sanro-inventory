@@ -1,6 +1,5 @@
 class CreateInventories < ActiveRecord::Migration
   def change
-    drop_table :inventories
 
     create_table :inventories do |t|
       t.belongs_to :item, index: true

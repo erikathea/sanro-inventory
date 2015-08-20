@@ -1,6 +1,5 @@
 class CreateItems < ActiveRecord::Migration
   def change
-    drop_table :items
 
     create_table :items do |t|
       t.string :description
