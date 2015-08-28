@@ -11,7 +11,8 @@
   %tbody
     - incoming_receipt_details.each do |incoming_receipt_detail|
       %tr
-        - item = Item.where(description: incoming_receipt_detail.description, part_number: incoming_receipt_detail.part_number).first
+        - inventory = Inventory.where(incoming_receipt_detail: incoming_receipt_detail).first
+        - item = inventory.item
         %td= link_to incoming_receipt_detail.description, item_path(item)
         %td= incoming_receipt_detail.part_number
         %td= number_with_precision(incoming_receipt_detail.qty, precision:2)
